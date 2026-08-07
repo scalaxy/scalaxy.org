@@ -1,0 +1,14 @@
+{{ define "main" }}
+<div class="page-head">
+  <div class="container">
+    {{ with .Params.kicker }}<div class="kicker">{{ . }}</div>{{ end }}
+    <h1>{{ .Title }}</h1>
+    {{ with .Description }}<p>{{ . }}</p>{{ end }}
+  </div>
+</div>
+<div class="container page-body">
+  <article class="prose">
+    {{ .Content }}
+  </article>
+</div>
+{{ end }}

@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html lang="{{ site.LanguageCode | default "en" }}">
+<head>
+  {{ partial "head.html" . }}
+</head>
+<body class="kind-{{ .Kind }} section-{{ with .Section }}{{ . }}{{ else }}home{{ end }}">
+  {{ partial "header.html" . }}
+  <main class="main">
+    {{ block "main" . }}{{ end }}
+  </main>
+  {{ partial "footer.html" . }}
+  <script src="{{ "js/app.js" | relURL }}"></script>
+</body>
+</html>

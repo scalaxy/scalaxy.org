@@ -1,0 +1,3 @@
+{{ $type := .Get "type" | default "info" }}
+{{ $title := .Get "title" | default (cond (eq $type "note") "Note" (cond (eq $type "warn") "Warning" (cond (eq $type "success") "Success" "Note")))}}
+<div class="callout {{ $type }}"><div>{{ if $title }}<span class="co-title">{{ $title }}</span>{{ end }}{{ .Inner | markdownify }}</div></div>

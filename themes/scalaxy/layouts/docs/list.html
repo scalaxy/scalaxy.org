@@ -1,0 +1,22 @@
+{{ define "main" }}
+<div class="page-head">
+  <div class="container">
+    {{ with .Params.kicker }}<div class="kicker">{{ . }}</div>{{ end }}
+    <h1>{{ .Title }}</h1>
+    {{ with .Description }}<p>{{ . }}</p>{{ end }}
+  </div>
+</div>
+<div class="container page-body">
+  <article class="prose">{{ .Content }}</article>
+  {{ if .Pages }}
+  <div class="doc-cards" style="margin-top:28px">
+    {{ range .Pages }}
+    <div class="doc-card">
+      <h3><a href="{{ .RelPermalink }}">{{ .Title }}</a></h3>
+      <p>{{ .Description }}</p>
+    </div>
+    {{ end }}
+  </div>
+  {{ end }}
+</div>
+{{ end }}

@@ -1,0 +1,4 @@
+name = "Scalaxy"
+license = "MIT"
+min_version = "0.120.0"
+description = "Professional documentation theme for the Scalaxy distributed database website."

@@ -1,0 +1,146 @@
+{{ define "main" }}
+<section class="hero">
+  <div class="container hero-grid">
+    <div>
+      <div class="hero-badges">
+        <span class="badge"><span class="dot"></span>Common Lisp</span>
+        <span class="badge green"><span class="dot"></span>Distributed</span>
+        <span class="badge green"><span class="dot"></span>Open Source · MIT</span>
+      </div>
+      <h1>A multi-purpose, cloud-ready distributed database in Common Lisp.</h1>
+      <p class="hero-sub">{{ site.Params.description }} Keys are sharded across nodes with consistent hashing, writes replicate synchronously, and every mutation is durably logged.</p>
+      <div class="hero-ctas">
+        <a class="btn btn-primary btn-lg" href="{{ "docs/" | relURL }}">Read the docs</a>
+        <a class="btn btn-lg" href="{{ site.Params.repo }}" target="_blank" rel="noopener">View on GitHub</a>
+      </div>
+      <div class="hero-meta">
+        <span><b>Version</b> {{ site.Params.version }}</span>
+        <span><b>Language</b> Common Lisp (SBCL)</span>
+        <span><b>License</b> MIT</span>
+        <span><b>Zero dependencies</b> core + console</span>
+      </div>
+    </div>
+    <div class="terminal">
+      <div class="terminal-bar">
+        <span class="dot" style="background:#ff5f57"></span>
+        <span class="dot" style="background:#febc2e"></span>
+        <span class="dot" style="background:#28c840"></span>
+        <span class="title">scalaxy — quick start</span>
+      </div>
+      <pre><code><span class="cmt"># run the test suite (8,650+ checks)</span>
+<span class="cmd">$</span> make test
+
+<span class="cmt"># start a node with the web console</span>
+<span class="cmd">$</span> bin/scalaxy --address 127.0.0.1:7200 \
+                --http-address 127.0.0.1:8080
+
+<span class="out">Scalaxy node node-abc123
+  data:  127.0.0.1:7200
+  http:  127.0.0.1:8080 (web console)</span>
+
+<span class="cmd">$</span> curl -X PUT localhost:8080/api/keys/hello \
+           -d '{"value":"world"}'
+<span class="out">{"ok":true,"key":"hello","size":5}</span><span class="cursor"></span></code></pre>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <div class="section-head">
+      <div class="kicker">Overview</div>
+      <h2>What is Scalaxy</h2>
+      <p>Scalaxy is a distributed key/value database engineered to be easy to run: a single binary, an embedded operations console, and container-first deployment.</p>
+    </div>
+    <div class="grid-3">
+      {{ range .Site.Data.features }}
+      <div class="card">
+        <svg class="fico" viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">{{ .icon | safeHTML }}</svg>
+        <h3>{{ .title }}</h3>
+        <p>{{ .text }}</p>
+      </div>
+      {{ end }}
+    </div>
+  </div>
+</section>
+
+<section class="section section-subtle">
+  <div class="container">
+    <div class="section-head">
+      <div class="kicker">Get started</div>
+      <h2>From zero to a running cluster in minutes</h2>
+    </div>
+    <div class="grid-3">
+      <div class="card">
+        <h3><span class="dim">01</span> · Install</h3>
+        <p>Requires SBCL (2.x). Clone the repository and run <code>make test</code> — no external dependencies, no package installation.</p>
+        <a class="card-link" href="{{ "docs/getting-started/" | relURL }}">Getting started →</a>
+      </div>
+      <div class="card">
+        <h3><span class="dim">02</span> · Deploy</h3>
+        <p>Run one node, a docker-compose cluster, or a Kubernetes StatefulSet. Configuration is 100% environment variables.</p>
+        <a class="card-link" href="{{ "docs/deployment/" | relURL }}">Deployment →</a>
+      </div>
+      <div class="card">
+        <h3><span class="dim">03</span> · Build apps</h3>
+        <p>Use the REST API, the Lisp client, or the web console. Reads and writes route across the cluster automatically.</p>
+        <a class="card-link" href="{{ "docs/rest-api/" | relURL }}">REST API →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <div class="section-head">
+      <div class="kicker">Topologies</div>
+      <h2>One engine, many shapes</h2>
+      <p>From a single embedded node on a laptop to a replicated cluster behind Kubernetes, Scalaxy adapts to the topology you need.</p>
+    </div>
+    <div class="grid-3">
+      <div class="card">
+        <h3>Single node</h3>
+        <p>An embedded durable store with a web console. Perfect for development, edge, and small workloads.</p>
+        <a class="card-link" href="{{ "topologies/" | relURL }}">Topologies →</a>
+      </div>
+      <div class="card">
+        <h3>Cluster</h3>
+        <p>Consistent-hash sharding across N nodes with synchronous replication — reads and writes survive node loss.</p>
+        <a class="card-link" href="{{ "topologies/" | relURL }}">Topologies →</a>
+      </div>
+      <div class="card">
+        <h3>Kubernetes</h3>
+        <p>A StatefulSet with PVCs, probes, and peer discovery via headless DNS. Scale the ring by adding pods.</p>
+        <a class="card-link" href="{{ "docs/kubernetes/" | relURL }}">Kubernetes →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section section-subtle">
+  <div class="container">
+    <div class="section-head">
+      <div class="kicker">Documentation</div>
+      <h2>Developer &amp; maintainer portal</h2>
+      <p>Browse the documentation portal, or start with one of the core guides.</p>
+    </div>
+    <div class="grid-3">
+      {{ range $cards := slice
+          (dict "icon" "<path d='M12 3l8 4.5v9L12 21l-8-4.5v-9L12 3z'/><path d='M4 7.5l8 4.5 8-4.5M12 12v9'/>" "title" "Getting started" "desc" "Install, build, and run your first Scalaxy node." "link" "/docs/getting-started/")
+          (dict "icon" "<circle cx='12' cy='12' r='9'/><circle cx='12' cy='12' r='2'/>" "title" "Architecture" "desc" "Ring sharding, replication, storage, and the console." "link" "/docs/architecture/")
+          (dict "icon" "<path d='M5 12h14M13 6l6 6-6 6'/>" "title" "REST API" "desc" "The HTTP API behind the web console." "link" "/docs/rest-api/")
+          (dict "icon" "<rect x='3' y='5' width='18' height='12' rx='2'/><path d='M8 20h8M12 17v3'/>" "title" "Deployment" "desc" "Docker, compose, and configuration reference." "link" "/docs/deployment/")
+          (dict "icon" "<path d='M12 3l8 4.5v9L12 21l-8-4.5v-9L12 3z'/>" "title" "Kubernetes" "desc" "Run a replicated cluster as a StatefulSet." "link" "/docs/kubernetes/")
+          (dict "icon" "<path d='M8 9l-4 3 4 3M16 9l4 3-4 3M13 6l-2 12'/>" "title" "Contributing" "desc" "How to contribute code, docs, and reports." "link" "/docs/contributing/")
+      }}
+      <div class="card">
+        <svg class="fico" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">{{ .icon | safeHTML }}</svg>
+        <h3><a href="{{ .link }}" style="color:inherit">{{ .title }}</a></h3>
+        <p>{{ .desc }}</p>
+        <a class="card-link" href="{{ .link }}">Explore →</a>
+      </div>
+      {{ end }}
+    </div>
+  </div>
+</section>
+{{ end }}

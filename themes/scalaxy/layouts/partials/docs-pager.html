@@ -1,0 +1,15 @@
+{{ $current := . }}
+{{ $all := where site.RegularPages "Section" "docs" }}
+{{ $sorted := sort $all "Weight" }}
+{{ $idx := -1 }}
+{{ range $i, $p := $sorted }}{{ if eq $p.RelPermalink $current.RelPermalink }}{{ $idx = $i }}{{ end }}{{ end }}
+{{ if ge $idx 0 }}
+<div class="doc-pager">
+  {{ with index $sorted (sub $idx 1) }}
+  <a class="prev" href="{{ .RelPermalink }}"><span class="dir">← Previous</span><span class="pg">{{ .Title }}</span></a>
+  {{ end }}
+  {{ with index $sorted (add $idx 1) }}
+  <a class="next" href="{{ .RelPermalink }}"><span class="dir">Next →</span><span class="pg">{{ .Title }}</span></a>
+  {{ end }}
+</div>
+{{ end }}
