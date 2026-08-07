@@ -59,5 +59,8 @@ hugo && rsync -av public/ user@host:/var/www/scalaxy.org/
 
 - Raw HTML (SVG topology diagrams) is enabled via
   `[markup.goldmark.renderer] unsafe = true` in `hugo.toml`.
-- The site carries an explicit independence notice: Scalaxy is an
-  independent open-source project, not affiliated with Scalaxy B.V.
+- The site carries the non-affiliation notice committed to in the GitHub
+  Trust & Safety response: Scalaxy is an independent open source distributed
+  database project associated with scalaxy.org (registered 2014) and is not
+  affiliated with, sponsored by, endorsed by, authorized by, or operated by
+  Scalaxy B.V. or scalaxy.com.
