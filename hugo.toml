@@ -10,6 +10,8 @@ disableKinds = ["taxonomy", "term"]
   version = "1.6.7"
   repo = "https://github.com/scalaxy/scalaxy"
   domain = "scalaxy.org"
+  author = "Artem Andreenko"
+  author_github = "miolini"
 
 [menu]
   [[menu.main]]

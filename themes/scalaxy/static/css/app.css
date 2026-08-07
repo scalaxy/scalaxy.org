@@ -315,3 +315,16 @@ a:hover { color: var(--accent-strong); }
 .prose .highlight span[style*="background-color"] {
   background-color: transparent !important;
 }
+
+/* screenshots */
+.screenshot { margin: 0; }
+.screenshot img {
+  width: 100%; height: auto;
+  border: 1px solid var(--border); border-radius: var(--radius);
+  box-shadow: var(--shadow-md); display: block;
+  transition: border-color .15s, box-shadow .15s;
+}
+.screenshot a:hover img { border-color: var(--accent); box-shadow: 0 8px 24px rgba(15,23,42,.12); }
+.screenshot figcaption {
+  margin-top: 8px; font-size: 13px; color: var(--text-faint); text-align: center;
+}

@@ -50,7 +50,13 @@ Scalaxy node <hostname>
 
 ## Use the web console
 
-Open <http://127.0.0.1:8080> — the dashboard shows cluster status, keys, the ring distribution, and a command console. Or use the REST API directly:
+Open <http://127.0.0.1:8080> — the dashboard shows cluster status, keys, the ring distribution, and a command console:
+
+![Scalaxy web console — cluster overview](/img/screenshots/scalaxy1.jpg)
+
+![Scalaxy web console — data browser](/img/screenshots/scalaxy2.jpg)
+
+Or use the REST API directly:
 
 ```sh
 curl -X PUT http://127.0.0.1:8080/api/keys/greeting -d '{"value":"hello world"}'
