@@ -46,7 +46,8 @@ sidebar, breadcrumbs, and prev/next paging automatically from page `weight`.
 
 ## Deploy
 
-The site is hosted on **Cloudflare Pages** and follows the official
+The site is hosted on **Cloudflare Pages** (a Pages project — **not** Workers).
+It follows the official
 [Deploy a Hugo site](https://developers.cloudflare.com/pages/framework-guides/deploy-a-hugo-site/)
 framework guide. In the **Set up builds and deployments** section:
 
@@ -57,6 +58,15 @@ framework guide. In the **Set up builds and deployments** section:
 | Build directory      | `public`                    |
 
 Every push to `main` triggers a Cloudflare Pages build and deploy.
+
+> **Workers vs Pages:** if the build log ever shows
+> `Executing user deploy command: npx wrangler deploy` followed by
+> `Missing entry-point to Worker script or to assets directory`, the
+> Cloudflare project was created as a **Workers** project (Workers
+> Builds). Delete it and create a **Pages** project (Workers & Pages →
+> Create application → Pages → Import an existing Git repository) with
+> the settings above — Pages deploys the `public` directory natively and
+> does not run `wrangler deploy`.
 
 ### Hugo version
 
