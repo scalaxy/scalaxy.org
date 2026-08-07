@@ -46,13 +46,39 @@ sidebar, breadcrumbs, and prev/next paging automatically from page `weight`.
 
 ## Deploy
 
-The site is hosted on **Cloudflare Pages** (connected to the GitHub
-repository). Configure it with:
+The site is hosted on **Cloudflare Pages** and follows the official
+[Deploy a Hugo site](https://developers.cloudflare.com/pages/framework-guides/deploy-a-hugo-site/)
+framework guide. In the **Set up builds and deployments** section:
 
-- **Build command:** `hugo --minify`
-- **Output directory:** `public`
+| Configuration option | Value                       |
+|----------------------|-----------------------------|
+| Production branch    | `main`                      |
+| Build command        | `hugo --minify`             |
+| Build directory      | `public`                    |
 
 Every push to `main` triggers a Cloudflare Pages build and deploy.
+
+### Hugo version
+
+The guide recommends pinning the Hugo version with a `HUGO_VERSION`
+environment variable. Set it in the Pages project under
+**Settings → Environment variables** for **both** the Production and the
+Preview environment (the guide explicitly requires both for preview
+deployments):
+
+```
+HUGO_VERSION = 0.157.0
+```
+
+### Base URL note
+
+The guide shows `hugo -b $CF_PAGES_URL` so absolute URLs follow the Pages
+deployment URL. This site uses **relative URLs** (`relURL`) for all links
+and assets and has a custom domain (`scalaxy.org`), so the build command
+keeps `baseURL = "https://scalaxy.org/"` from `hugo.toml`. Adding
+`-b $CF_PAGES_URL` would rewrite canonical/`og:url`/sitemap URLs to the
+`*.pages.dev` domain in production, which is why it is intentionally not
+used here.
 
 ### Wrangler CLI
 
