@@ -46,13 +46,18 @@ sidebar, breadcrumbs, and prev/next paging automatically from page `weight`.
 
 ## Deploy
 
-The site is fully static and can be hosted on GitHub Pages, Netlify, or any
-static host. The included GitHub Actions workflow
-(`.github/workflows/pages.yml`) builds and publishes to GitHub Pages on push
-to `main`.
+The site is hosted on **Cloudflare Pages** (connected to the GitHub
+repository). Configure it with:
+
+- **Build command:** `hugo --minify`
+- **Output directory:** `public`
+
+Every push to `main` triggers a Cloudflare Pages build and deploy.
+
+For manual deploys or other static hosts:
 
 ```sh
-hugo && rsync -av public/ user@host:/var/www/scalaxy.org/
+hugo --minify && rsync -av public/ user@host:/var/www/scalaxy.org/
 ```
 
 ## Notes
