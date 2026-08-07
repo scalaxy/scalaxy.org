@@ -54,7 +54,23 @@ repository). Configure it with:
 
 Every push to `main` triggers a Cloudflare Pages build and deploy.
 
-For manual deploys or other static hosts:
+### Wrangler CLI
+
+The repository is configured for [Wrangler](https://developers.cloudflare.com/workers/wrangler/)
+(`wrangler.toml`, project `scalaxy-org`). After `npm install`:
+
+```sh
+npm run build       # hugo --minify
+npm run preview     # serve ./public locally via wrangler pages dev
+npm run deploy      # build + wrangler pages deploy public --project-name scalaxy-org
+```
+
+Requires `wrangler login` (or `CLOUDFLARE_API_TOKEN` / `CLOUDFLARE_ACCOUNT_ID`
+env vars) for `deploy`. An optional GitHub Actions workflow
+(`.github/workflows/deploy.yml`) is included for push-based deploys — only
+use it if you are **not** using the Cloudflare Pages Git integration.
+
+### Other static hosts
 
 ```sh
 hugo --minify && rsync -av public/ user@host:/var/www/scalaxy.org/

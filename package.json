@@ -1,0 +1,15 @@
+{
+  "name": "scalaxy-org",
+  "version": "1.6.7",
+  "private": true,
+  "description": "scalaxy.org — Scalaxy project website (Hugo + Cloudflare Pages)",
+  "scripts": {
+    "build": "hugo --minify",
+    "dev": "hugo server -D",
+    "preview": "npm run build && wrangler pages dev public",
+    "deploy": "npm run build && wrangler pages deploy public --project-name scalaxy-org"
+  },
+  "devDependencies": {
+    "wrangler": "^4.119.0"
+  }
+}
