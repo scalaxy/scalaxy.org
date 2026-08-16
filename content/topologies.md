@@ -7,11 +7,11 @@ date: 2026-08-06
 lastmod: 2026-08-06
 ---
 
-Scalaxy runs the same code in every topology — only the environment variables change. All topologies share the data-plane port `7200` (binary protocol) and the console port `8080` (web UI, REST API, `/healthz`).
+Scalaxy runs the same code in every topology; only the environment variables change. All topologies use the data-plane port `7200` (binary protocol) and the console port `8080` (web UI, REST API, `/healthz`).
 
 ## Single node
 
-The simplest deployment: one durable node with an embedded web console. Great for development, edge devices, and small workloads.
+The simplest setup: one node with a durable log and its own web console. Good for development, edge devices, and small workloads.
 
 <div class="diagram">
 <svg viewBox="0 0 640 200" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Single node topology">

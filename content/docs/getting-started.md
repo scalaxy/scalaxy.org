@@ -6,13 +6,6 @@ description: "Install SBCL, clone Scalaxy, run the tests, and start your first n
 weight: 10
 ---
 
-{{< callout type="note" title="Independence" >}}
-Scalaxy is an independent open source distributed database project associated
-with scalaxy.org, a domain registered by the project owner in 2014. This
-project is **not affiliated with, sponsored by, endorsed by, authorized by,
-or operated by Scalaxy B.V. or scalaxy.com**.
-{{< /callout >}}
-
 ## Requirements
 
 - [SBCL](https://www.sbcl.org/) 2.x — the reference implementation.

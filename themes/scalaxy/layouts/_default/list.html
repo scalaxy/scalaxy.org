@@ -7,7 +7,7 @@
   <div class="doc-cards" style="margin-top:28px">
     {{ range .Pages }}
     <div class="doc-card">
-      <h3><a href="{{ .RelPermalink }}">{{ .Title }}</a></h3>
+      <h2><a href="{{ .RelPermalink }}">{{ .Title }}</a></h2>
       <p>{{ .Description }}</p>
     </div>
     {{ end }}

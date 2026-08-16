@@ -20,7 +20,7 @@ Scalaxy is an independent, open-source project. Contributions of code, documenta
 
 ## What to work on
 
-- Bugs found while running the 8,650-check suite.
+- Bugs found while running the 8,654-check suite.
 - The roadmap in the README: snapshot-based catch-up for lagging replicas, a membership/join protocol, multi-key transactions.
 - Documentation, the web console, and deployment examples.
 
@@ -29,7 +29,7 @@ Scalaxy is an independent, open-source project. Contributions of code, documenta
 - Pure ANSI Common Lisp where possible; keep SBCL-specific code behind `#+sbcl` and out of the core modules.
 - The JSON/HTTP/TCP layers are intentionally dependency-free — please keep them that way.
 - Every public function should have a docstring.
-- Update the relevant docs page in this portal when you change behavior.
+- Update the relevant docs page on this site when you change behavior.
 
 ## Code of conduct
 

@@ -1,12 +1,13 @@
 {{ define "main" }}
 <div class="page-head">
   <div class="container">
-    <div class="kicker">Documentation portal</div>
+    <div class="kicker">Documentation</div>
     <h1>{{ .Title }}</h1>
     {{ with .Description }}<p>{{ . }}</p>{{ end }}
   </div>
 </div>
 <div class="container page-body">
+  {{ with .Content }}<article class="prose">{{ . }}</article>{{ end }}
   <div class="doc-cards">
     {{ $groups := slice
         (dict "icon" "<path d='M12 3l8 4.5v9L12 21l-8-4.5v-9L12 3z'/><path d='M4 7.5l8 4.5 8-4.5M12 12v9'/>" "title" "Getting started" "desc" "Install, build, and run your first Scalaxy node." "link" "/docs/getting-started/" "tag" "guide")
@@ -24,7 +25,7 @@
     {{ range $groups }}
     <div class="doc-card" data-title="{{ .title }}" data-desc="{{ .desc }}" data-tag="{{ .tag }}">
       <svg class="dc-icon" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">{{ .icon | safeHTML }}</svg>
-      <h3><a href="{{ .link }}">{{ .title }}</a></h3>
+      <h2><a href="{{ .link }}">{{ .title }}</a></h2>
       <p>{{ .desc }}</p>
       <div class="doc-card-meta">{{ .tag }}</div>
     </div>

@@ -2,7 +2,7 @@
 <div class="container docs-body">
   {{ partial "docs-nav.html" . }}
   <div class="docs-content">
-    <div class="breadcrumb"><a href="{{ "docs/" | relURL }}">Docs</a>{{ with .Parent }}{{ if and .IsPage }} / <a href="{{ .RelPermalink }}">{{ .Title }}</a>{{ end }}{{ end }} / {{ .Title }}</div>
+    <div class="breadcrumb"><a href="{{ "docs/" | relURL }}">Docs</a>{{ with .Parent }}{{ if ne .RelPermalink (site.GetPage "docs").RelPermalink }} / <a href="{{ .RelPermalink }}">{{ .Title }}</a>{{ end }}{{ end }} / {{ .Title }}</div>
     <article class="prose">
       <h1>{{ .Title }}</h1>
       {{ with .Description }}<p class="doc-lede">{{ . }}</p>{{ end }}

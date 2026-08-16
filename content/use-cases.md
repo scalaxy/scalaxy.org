@@ -7,7 +7,7 @@ kicker: "Use cases"
 weight: 20
 ---
 
-Scalaxy is a **multi-purpose, cloud-ready distributed key/value database**. Its combination of consistent-hash sharding, synchronous replication, durable append-only storage, and an embedded operations console makes it a practical choice for a wide range of workloads — especially where a single small binary and minimal operational surface matter.
+Scalaxy is a small, durable key/value database that shards keys, replicates writes, and serves its own console. If that is what you need, without standing up a database cluster, these are the workloads it fits.
 
 ## Session & user data
 
@@ -20,19 +20,19 @@ curl http://scalaxy:8080/api/keys/user:42
 
 ## Feature flags & configuration
 
-A single source of truth for runtime configuration. Read-heavy workloads benefit from the web console's prefix scan and from the ability to inspect values as UTF-8 and hex side by side.
+Keep flags and runtime settings in one store. Reads are cheap, the console scans by prefix, and values show up as both UTF-8 and hex.
 
 ## Cache & hot storage tier
 
-Use Scalaxy as a shared cache layer with stronger durability than an in-memory cache. The append-only log means a restart does not empty the cache; eviction policies can be layered on top with `delete`.
+Use it as a shared cache that survives restarts: every write hits the append-only log first, so nothing vanishes when a node reboots. Evict with `delete` when you need to.
 
 ## Edge & embedded deployments
 
-Because Scalaxy is a single SBCL binary with zero external dependencies, it runs comfortably on small machines, single-board computers, and air-gapped networks. The web console is served by the database itself — no separate frontend stack required.
+One SBCL binary, no dependencies: it runs without trouble on small machines, single-board computers, and air-gapped networks. The console comes with the database, so there is no separate frontend to deploy.
 
 ## Microservice shared state
 
-Give a fleet of services a small, well-understood shared store without standing up a heavyweight database cluster:
+A small shared store for a fleet of services, without running a database cluster:
 
 {{< callout type="note" title="Embedded mode" >}}
 The in-process cluster API (`make-cluster`) is also usable as an embedded library — a database inside your own Lisp process.
@@ -40,7 +40,7 @@ The in-process cluster API (`make-cluster`) is also usable as an embedded librar
 
 ## Demos, labs, and education
 
-A zero-dependency install, a 8,650-check test suite, and a clean protocol make Scalaxy easy to teach and experiment with. `make test` exercises real TCP networking, replication, failover, and persistence.
+Nothing to install, a test suite with 8,654 checks, and a protocol you can read in one sitting make it easy to teach and experiment with. `make test` drives real TCP connections, replication, failover, and crash recovery.
 
 ## When to consider something else
 

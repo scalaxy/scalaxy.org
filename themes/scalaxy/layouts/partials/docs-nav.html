@@ -8,7 +8,7 @@
       (dict "title" "Maintainers" "pages" (slice "maintainers/releasing"))
   }}
   {{ range $groups }}
-    <h4>{{ .title }}</h4>
+    <div class="docs-group-label">{{ .title }}</div>
     {{ range .pages }}
       {{ $p := $current.Site.GetPage (printf "/docs/%s/" .) }}
       {{ if $p }}

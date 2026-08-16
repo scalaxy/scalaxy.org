@@ -33,12 +33,12 @@ weight: 90
 
 - Verify the peer's data port and HTTP port are reachable (`curl http://<peer>:8080/healthz`).
 - Check that `SCALAXY_PEERS` matches on every node, including the optional `:http-port` suffix when ports differ.
-- Hostnames are resolved at connection time — DNS names in containers and Kubernetes work out of the box.
+- Hostnames are resolved at connection time, so DNS names work as-is in containers and Kubernetes.
 
 ### Keys missing after a restart
 
 - Confirm `SCALAXY_DATA_DIR` points at persistent storage and that the directory contains `scalaxy.log`.
-- Node id no longer affects the log filename — the store is always `scalaxy.log` in the data dir.
+- The log filename does not depend on the node id: the store is always `scalaxy.log` in the data directory.
 
 ### Writes fail with empty cluster
 

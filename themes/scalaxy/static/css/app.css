@@ -117,6 +117,10 @@ a:hover { color: var(--accent-strong); }
 .terminal .cmt { color: #475569; }
 .cursor { display: inline-block; width: 7px; height: 14px; background: #7dd3fc; vertical-align: text-bottom; animation: blink 1.1s steps(1) infinite; }
 @keyframes blink { 50% { opacity: 0; } }
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .cursor { animation: none; }
+}
 
 /* ============ sections ============ */
 .section { padding: 72px 0; }
@@ -212,8 +216,8 @@ a:hover { color: var(--accent-strong); }
 /* ============ docs layout ============ */
 .docs-body { display: grid; grid-template-columns: 236px minmax(0, 1fr) 190px; gap: 40px; padding: 40px 28px 80px; }
 .docs-sidebar { position: sticky; top: calc(var(--header-h) + 20px); align-self: start; max-height: calc(100vh - var(--header-h) - 40px); overflow-y: auto; padding-right: 8px; }
-.docs-sidebar h4 { font-size: 11px; text-transform: uppercase; letter-spacing: .08em; color: var(--text-faint); margin: 20px 0 6px; font-weight: 600; }
-.docs-sidebar h4:first-child { margin-top: 0; }
+.docs-sidebar .docs-group-label { font-size: 11px; text-transform: uppercase; letter-spacing: .08em; color: var(--text-faint); margin: 20px 0 6px; font-weight: 600; }
+.docs-sidebar .docs-group-label:first-child { margin-top: 0; }
 .docs-sidebar a { display: block; color: var(--text-dim); font-size: 13.5px; padding: 5px 10px; border-radius: 6px; border-left: 2px solid transparent; }
 .docs-sidebar a:hover { color: var(--text); background: var(--surface-2); }
 .docs-sidebar a.active { color: var(--text); background: var(--surface-2); border-left-color: var(--accent); font-weight: 600; }
@@ -238,13 +242,13 @@ a:hover { color: var(--accent-strong); }
 .doc-pager .next { text-align: right; }
 
 /* docs cards (landing + sections) */
-.doc-cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 16px; margin-top: 10px; }
+.doc-cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(300px, 100%), 1fr)); gap: 16px; margin-top: 10px; }
 .doc-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 20px; transition: border-color .15s, box-shadow .15s; }
 .doc-card:hover { border-color: var(--accent); box-shadow: var(--shadow-sm); }
 .doc-card .dc-icon { color: var(--accent); display: block; margin-bottom: 10px; }
-.doc-card h3 { font-size: 15.5px; margin-bottom: 5px; }
-.doc-card h3 a { color: var(--text); }
-.doc-card h3 a:hover { color: var(--accent); }
+.doc-card h2, .doc-card h3 { font-size: 15.5px; margin-bottom: 5px; }
+.doc-card h2 a, .doc-card h3 a { color: var(--text); }
+.doc-card h2 a:hover, .doc-card h3 a:hover { color: var(--accent); }
 .doc-card p { color: var(--text-dim); font-size: 13.5px; }
 .doc-card .doc-card-meta { font-family: var(--mono); font-size: 11px; color: var(--text-faint); margin-top: 8px; }
 
@@ -263,7 +267,7 @@ a:hover { color: var(--accent-strong); }
 .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 32px; padding: 44px 28px 28px; }
 .footer-desc { color: var(--text-faint); font-size: 13.5px; margin-top: 12px; max-width: 340px; }
 .footer-col { display: flex; flex-direction: column; gap: 7px; }
-.footer-col h4 { font-size: 12px; text-transform: uppercase; letter-spacing: .07em; color: var(--text-faint); margin-bottom: 4px; font-weight: 600; }
+.footer-col .footer-col-title { font-size: 12px; text-transform: uppercase; letter-spacing: .07em; color: var(--text-faint); margin-bottom: 4px; font-weight: 600; }
 .footer-col a { color: var(--text-dim); font-size: 13.5px; }
 .footer-col a:hover { color: var(--accent); }
 .footer-bottom { display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap; padding: 18px 28px; border-top: 1px solid var(--border); color: var(--text-faint); font-size: 12.5px; }
@@ -311,7 +315,7 @@ a:hover { color: var(--accent-strong); }
 
 /* chroma (github style) marks unlexable tokens (e.g. HTTP request lines)
    with a dark maroon error background; keep code blocks clean on the
-   light portal */
+   light theme */
 .prose .highlight span[style*="background-color"] {
   background-color: transparent !important;
 }

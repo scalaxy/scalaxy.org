@@ -6,7 +6,7 @@ enableRobotsTXT = true
 disableKinds = ["taxonomy", "term"]
 
 [params]
-  description = "Scalaxy is a multi-purpose, cloud-ready distributed database written in Common Lisp."
+  description = "A distributed key/value database written in Common Lisp: one binary, a built-in web console, no external dependencies."
   version = "1.6.7"
   repo = "https://github.com/scalaxy/scalaxy"
   domain = "scalaxy.org"
@@ -16,15 +16,15 @@ disableKinds = ["taxonomy", "term"]
 [menu]
   [[menu.main]]
     name = "Docs"
-    url = "/docs/"
+    pageRef = "/docs"
     weight = 10
   [[menu.main]]
     name = "Use Cases"
-    url = "/use-cases/"
+    pageRef = "/use-cases"
     weight = 20
   [[menu.main]]
     name = "Topologies"
-    url = "/topologies/"
+    pageRef = "/topologies"
     weight = 30
 
 [markup]

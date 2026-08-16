@@ -8,11 +8,11 @@
     </a>
     <nav class="main-nav" id="main-nav">
       {{ range site.Menus.main }}
-        <a class="nav-link{{ if eq $.Page.RelPermalink .URL }} active{{ end }}" href="{{ .URL }}">{{ .Name }}</a>
+        <a class="nav-link{{ if or ($.IsMenuCurrent "main" .) ($.HasMenuCurrent "main" .) }} active{{ end }}" href="{{ .URL }}">{{ .Name }}</a>
       {{ end }}
       <a class="nav-link nav-cta" href="{{ site.Params.repo }}" target="_blank" rel="noopener">GitHub</a>
     </nav>
-    <button class="nav-toggle" id="nav-toggle" aria-label="Toggle navigation" aria-expanded="false">
+    <button class="nav-toggle" id="nav-toggle" aria-label="Toggle navigation" aria-expanded="false" aria-controls="main-nav">
       <span></span><span></span><span></span>
     </button>
   </div>

@@ -7,8 +7,8 @@
         <span class="badge green"><span class="dot"></span>Distributed</span>
         <span class="badge green"><span class="dot"></span>Open Source · MIT</span>
       </div>
-      <h1>A multi-purpose, cloud-ready distributed database in Common Lisp.</h1>
-      <p class="hero-sub">{{ site.Params.description }} Keys are sharded across nodes with consistent hashing, writes replicate synchronously, and every mutation is durably logged.</p>
+      <h1>A distributed key/value database in Common Lisp.</h1>
+      <p class="hero-sub">One binary, a built-in web console, no external dependencies. Keys are sharded across nodes with consistent hashing, writes replicate synchronously, and every mutation is durably logged.</p>
       <div class="hero-ctas">
         <a class="btn btn-primary btn-lg" href="{{ "docs/" | relURL }}">Read the docs</a>
         <a class="btn btn-lg" href="{{ site.Params.repo }}" target="_blank" rel="noopener">View on GitHub</a>
@@ -27,7 +27,7 @@
         <span class="dot" style="background:#28c840"></span>
         <span class="title">scalaxy — quick start</span>
       </div>
-      <pre><code><span class="cmt"># run the test suite (8,650+ checks)</span>
+      <pre><code><span class="cmt"># run the test suite (8,654+ checks)</span>
 <span class="cmd">$</span> make test
 
 <span class="cmt"># start a node with the web console</span>
@@ -50,8 +50,7 @@
     <div class="section-head">
       <div class="kicker">Overview</div>
       <h2>What is Scalaxy</h2>
-      <p>Scalaxy is a distributed key/value database engineered to be easy to run: a single binary, an embedded operations console, and container-first deployment.</p>
-      <p style="color:var(--text-dim);font-size:14px;margin-top:-28px;margin-bottom:0">Independent project since 2014 — associated with scalaxy.org, not affiliated with, sponsored by, or operated by Scalaxy B.V. or scalaxy.com.</p>
+      <p>Scalaxy is a distributed key/value database that keeps things small: one binary, a web console served by the database itself, and deployments that are just the binary plus a data directory.</p>
     </div>
     <div class="grid-3">
       {{ range .Site.Data.features }}
@@ -70,7 +69,7 @@
     <div class="section-head">
       <div class="kicker">Screenshots</div>
       <h2>The web console</h2>
-      <p>Every Scalaxy node serves a web console — cluster overview, data browser, topology, and a command console.</p>
+      <p>Every node serves the console over HTTP. No separate frontend to build or deploy.</p>
     </div>
     <div class="grid-2">
       <figure class="screenshot">
@@ -93,22 +92,22 @@
   <div class="container">
     <div class="section-head">
       <div class="kicker">Get started</div>
-      <h2>From zero to a running cluster in minutes</h2>
+      <h2>Up and running in minutes</h2>
     </div>
     <div class="grid-3">
       <div class="card">
         <h3><span class="dim">01</span> · Install</h3>
-        <p>Requires SBCL (2.x). Clone the repository and run <code>make test</code> — no external dependencies, no package installation.</p>
+        <p>You need SBCL 2.x. Clone the repository and run <code>make test</code>. There is nothing else to install.</p>
         <a class="card-link" href="{{ "docs/getting-started/" | relURL }}">Getting started →</a>
       </div>
       <div class="card">
         <h3><span class="dim">02</span> · Deploy</h3>
-        <p>Run one node, a docker-compose cluster, or a Kubernetes StatefulSet. Configuration is 100% environment variables.</p>
+        <p>Run a single node, a docker-compose cluster, or a Kubernetes StatefulSet. Configuration is just environment variables.</p>
         <a class="card-link" href="{{ "docs/deployment/" | relURL }}">Deployment →</a>
       </div>
       <div class="card">
         <h3><span class="dim">03</span> · Build apps</h3>
-        <p>Use the REST API, the Lisp client, or the web console. Reads and writes route across the cluster automatically.</p>
+        <p>Use the REST API, the Lisp client, or the web console. The cluster routes reads and writes for you.</p>
         <a class="card-link" href="{{ "docs/rest-api/" | relURL }}">REST API →</a>
       </div>
     </div>
@@ -119,23 +118,23 @@
   <div class="container">
     <div class="section-head">
       <div class="kicker">Topologies</div>
-      <h2>One engine, many shapes</h2>
-      <p>From a single embedded node on a laptop to a replicated cluster behind Kubernetes, Scalaxy adapts to the topology you need.</p>
+      <h2>Same code, three ways to run it</h2>
+      <p>The binary is identical in every setup; only the environment variables change. Run one node on a laptop, a replicated cluster on a few machines, or a StatefulSet in Kubernetes.</p>
     </div>
     <div class="grid-3">
       <div class="card">
         <h3>Single node</h3>
-        <p>An embedded durable store with a web console. Perfect for development, edge, and small workloads.</p>
+        <p>One node, a durable log, and a web console. Fine for development, small services, and edge devices.</p>
         <a class="card-link" href="{{ "topologies/" | relURL }}">Topologies →</a>
       </div>
       <div class="card">
         <h3>Cluster</h3>
-        <p>Consistent-hash sharding across N nodes with synchronous replication — reads and writes survive node loss.</p>
+        <p>Keys shard across N nodes and writes replicate synchronously, so reads and writes keep working when a node goes down.</p>
         <a class="card-link" href="{{ "topologies/" | relURL }}">Topologies →</a>
       </div>
       <div class="card">
         <h3>Kubernetes</h3>
-        <p>A StatefulSet with PVCs, probes, and peer discovery via headless DNS. Scale the ring by adding pods.</p>
+        <p>A StatefulSet with PVCs, probes, and peer discovery over headless DNS. Add pods to grow the ring.</p>
         <a class="card-link" href="{{ "docs/kubernetes/" | relURL }}">Kubernetes →</a>
       </div>
     </div>
@@ -146,8 +145,8 @@
   <div class="container">
     <div class="section-head">
       <div class="kicker">Documentation</div>
-      <h2>Developer &amp; maintainer portal</h2>
-      <p>Browse the documentation portal, or start with one of the core guides.</p>
+      <h2>Docs for developers and maintainers</h2>
+      <p>Everything is documented: install, architecture, protocol, deployment, and how to run a cluster in production.</p>
     </div>
     <div class="grid-3">
       {{ range $cards := slice

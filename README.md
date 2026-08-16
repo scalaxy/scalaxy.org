@@ -29,8 +29,7 @@ deploy/             Deployment helpers
 `themes/scalaxy` is a minimal, enterprise-style light theme:
 clean typography, restrained blue accent, dark terminal accent, light
 syntax highlighting (chroma `github` style), and a three-column docs
-layout with sidebar navigation, "on this page" TOC, prev/next paging,
-and prev/next paging.
+layout with sidebar navigation, "on this page" TOC, and prev/next paging.
 
 Layout lookup follows Hugo conventions: `index.html` for the home page,
 `docs/single.html` for doc pages, `docs/landing.html` (selected via
@@ -116,8 +115,5 @@ hugo --minify && rsync -av public/ user@host:/var/www/scalaxy.org/
 
 - Raw HTML (SVG topology diagrams) is enabled via
   `[markup.goldmark.renderer] unsafe = true` in `hugo.toml`.
-- The site carries the non-affiliation notice committed to in the GitHub
-  Trust & Safety response: Scalaxy is an independent open source distributed
-  database project associated with scalaxy.org (registered 2014) and is not
-  affiliated with, sponsored by, endorsed by, authorized by, or operated by
-  Scalaxy B.V. or scalaxy.com.
+- The site footer carries the independence notice committed to in the
+  GitHub Trust & Safety response.

@@ -1,0 +1,14 @@
+{{ define "main" }}
+<div class="page-head">
+  <div class="container">
+    <div class="kicker">404</div>
+    <h1>Page not found</h1>
+    <p>The page you are looking for does not exist or has moved.</p>
+  </div>
+</div>
+<div class="container page-body">
+  <article class="prose">
+    <p>Try the <a href="/">home page</a>, browse the <a href="{{ "docs/" | relURL }}">documentation</a>, or use the navigation above.</p>
+  </article>
+</div>
+{{ end }}
