@@ -1,6 +1,6 @@
 ---
 date: 2026-08-06
-lastmod: 2026-08-06
+lastmod: 2026-08-17
 title: "Client API"
 description: "Talk to Scalaxy from Lisp, curl, or your own language over the wire protocol."
 weight: 60
@@ -25,6 +25,17 @@ weight: 60
 ```
 
 Values are octet vectors, so any binary payload stores as-is. The client speaks the wire protocol directly over TCP — no HTTP required.
+
+Graph queries run through the same client:
+
+```lisp
+(scalaxy:cypher *db* "MATCH (a:Person)-[:KNOWS]->(b:Person) RETURN a.name AS from, b.name AS to")
+;; => #<hash-table: "columns" (#<... "from" "to">) "rows" (...) "count" N>
+```
+
+`cypher` returns the decoded JSON result table (columns, rows, count) and
+accepts `:params` for parameterized queries.  On a cluster node it routes
+through the gateway like any other operation.
 
 ## curl
 

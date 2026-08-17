@@ -1,6 +1,6 @@
 ---
 date: 2026-08-06
-lastmod: 2026-08-06
+lastmod: 2026-08-17
 title: "Wire protocol"
 description: "The binary framing and opcodes shared by the data plane and the durability log."
 weight: 40
@@ -21,6 +21,10 @@ The same record format is used for:
 - replication messages between nodes,
 - the append-only durability log (so log records can be replayed and replicated verbatim).
 
+Cypher queries use the same frames: a `CYPHER` request carries the
+database name, the query text, and JSON parameters; the reply is a
+`RESPONSE` whose value is the JSON result table.
+
 ## Opcodes
 
 | Opcode | Value | Payload |
@@ -36,6 +40,7 @@ The same record format is used for:
 | `PONG` | 9 | — |
 | `SNAPSHOT` | 10 | count (u32) + (key, value) pairs |
 | `RESPONSE` | 11 | status (u8) + value octets + count (u32) + pairs |
+| `CYPHER` | 12 | db (string) + query (string) + params (JSON octets) |
 
 ## Primitives
 

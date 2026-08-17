@@ -1,12 +1,12 @@
 ---
 date: 2026-08-06
-lastmod: 2026-08-06
+lastmod: 2026-08-17
 title: "REST API"
 description: "The HTTP API behind the web console: keys, status, health, and the command console."
 weight: 50
 ---
 
-The web console is served by each node over HTTP (default port 8080). With `SCALAXY_PEERS` set, the API is **cluster-aware**: key operations route to ring owners, and status is aggregated across all peers.
+The web console is served by each node over HTTP (default port 8080). With `SCALAXY_PEERS` set, the API is **cluster-aware**: key operations route to ring owners, and status is aggregated across all peers.  Each database also holds a property graph, queried with openCypher through `POST /api/cypher`.
 
 ## Endpoints
 
@@ -27,7 +27,7 @@ GET /api/status
 ```json
 {
   "node":   {"id":"node-0","address":"0.0.0.0:7200","http":"0.0.0.0:8080",
-             "keys":18,"uptime":42,"replicas":1,"version":"1.6.7","status":"ok"},
+             "keys":18,"uptime":42,"replicas":1,"version":"1.8.0","status":"ok"},
   "nodes":  [{"id":"node-1","keys":27,"status":"ok"},
              {"id":"node-2","keys":15,"status":"ok"}],
   "cluster":{"nodes":3,"keys":60,"replicas":1,"status":"healthy"},
@@ -66,7 +66,25 @@ POST /api/query
 {"ok":true,"output":"2 keys matching \"cust:\":\ncust:1  (2 bytes)\ncust:2  (2 bytes)"}
 ```
 
-Supported commands: `put <key> <value>`, `get <key>`, `delete <key>`, `scan <prefix> [limit]`.
+Supported commands: `put <key> <value>`, `get <key>`, `delete <key>`,
+`scan <prefix> [limit]`, and `cypher <query>` (see below).
+
+### Cypher queries
+
+```text
+POST /api/cypher
+{"query":"MATCH (m:Movie {title: 'The Matrix'})<-[:ACTED_IN]-(p:Person) RETURN p.name AS actor ORDER BY actor","db":"default"}
+```
+
+```json
+{"columns":["actor"],"rows":[["Keanu Reeves"],["Laurence Fishburne"]],"count":2}
+```
+
+Runs an openCypher query against the graph database in `db` (default
+`default`).  The optional `params` field passes query parameters as a
+JSON object.  Results are the JSON table `{columns, rows, count}`.  A
+Cypher error returns HTTP 400 with `error` and `kind` (the openCypher
+error taxonomy); see [Cypher](/docs/cypher/).
 
 ### Node-local status
 

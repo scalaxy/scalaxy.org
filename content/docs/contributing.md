@@ -1,6 +1,6 @@
 ---
 date: 2026-08-06
-lastmod: 2026-08-06
+lastmod: 2026-08-17
 title: "Contributing"
 description: "How to contribute code, documentation, and bug reports."
 weight: 100
@@ -20,9 +20,15 @@ Scalaxy is an independent, open-source project. Contributions of code, documenta
 
 ## What to work on
 
-- Bugs found while running the 8,654-check suite.
-- The roadmap in the README: snapshot-based catch-up for lagging replicas, a membership/join protocol, multi-key transactions.
-- Documentation, the web console, and deployment examples.
+- Bugs found while running the 9,018-check suite or the openCypher TCK
+  (the 500 failing scenarios are logged in `specs/tck-results.txt`).
+- Narrowing the TCK gap: temporal types (`date`/`time`/`datetime`/
+  `duration`, 1,054 scenarios), `percentileCont`/`percentileDisc`, and
+  stored procedures are the biggest declared-unsupported buckets.
+- The roadmap in the README: snapshot-based catch-up for lagging replicas,
+  a membership/join protocol, multi-key transactions, and streaming
+  aggregation for whole-graph queries over the large NYC taxi benchmark.
+- Documentation, the web console, and benchmark datasets.
 
 ## Guidelines
 

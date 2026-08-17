@@ -1,8 +1,8 @@
 ---
 date: 2026-08-06
-lastmod: 2026-08-06
+lastmod: 2026-08-17
 title: "Architecture"
-description: "Consistent hashing, synchronous replication, durable logs, and the web console."
+description: "Consistent hashing, synchronous replication, durable logs, the graph layer, and the openCypher engine."
 weight: 30
 ---
 
@@ -10,16 +10,19 @@ weight: 30
 
 ```
 +--------------------------------------------------------------+
-|                    client (REST / Lisp API)                   |
+|            client (REST / Lisp API / Cypher)                  |
 +--------------------------------------------------------------+
-        | put/get/delete/scan (binary frames over TCP)
+        | put/get/delete/scan · cypher (binary frames over TCP)
         v
 +--------------------------------------------------------------+
-|  consistent-hash ring  ->  primary node owns key             |
+|  consistent-hash ring  ->  primary node owns key/entity      |
 |  node-put: apply locally, persist to log, replicate to       |
 |            next N ring members, await acks                   |
 +--------------------------------------------------------------+
 |  per-node storage: in-memory hash table + append-only log    |
+|  graph layer: nodes, relationships, labels, indexes, blobs   |
++--------------------------------------------------------------+
+|  Cypher engine: lexer -> parser -> AST -> semantics -> exec  |
 +--------------------------------------------------------------+
 |  web console: HTTP server + JSON REST API + /healthz         |
 +--------------------------------------------------------------+
@@ -47,6 +50,31 @@ Replicas apply the mutation to their own store **without** re-logging it (the lo
 
 Each node keeps an in-memory hash table plus an **append-only log** using the same length-prefixed record format as the network protocol. On startup the log is replayed to reconstruct state; the log filename is a stable `scalaxy.log` in the data directory, so restarts (and container restarts) find the data.
 
+## Graph storage & Cypher engine
+
+On top of the replicated key/value store sits a **property-graph layer**
+(`src/graph.lisp`, `src/db.lisp`, `src/codec.lisp`):
+
+- **Nodes & relationships** — every node has an id, a label set, and a
+  property map; every relationship has an id, a type, start/end node ids,
+  and a property map.  Large binary properties spill to blob records.
+- **Indexes** — label, type, and adjacency indexes (outgoing/incoming
+  relationships per node) keep pattern matching local.
+- **Multi-database** — a database is a namespaced partition of the same
+  ring; graph entities, keys, and the durability log all live in the one
+  replicated store.
+- **openCypher engine** (`src/cypher/`) — a full compiler pipeline in pure
+  Common Lisp: lexer → parser → AST (with canonical printer) → semantic
+  analysis → executor, plus a wire format and a metacircular reference
+  oracle used for differential testing.  The executor is symbolically
+  aggregated, so `count(a) * 10 + count(b) * 5` and nested `collect`
+  expressions evaluate correctly.
+
+Cypher queries reach the engine over the same binary frames (`CYPHER`
+opcode), through the REST API (`POST /api/cypher`), the Lisp client, or
+the web-console command line.  Queries route through the cluster gateway
+like any other operation.
+
 ## Wire protocol
 
 See [Protocol](/docs/protocol/) for the full specification. The same framing carries client requests, replication messages, and log records.
@@ -54,6 +82,14 @@ See [Protocol](/docs/protocol/) for the full specification. The same framing car
 ## Web console
 
 Every node runs an HTTP server (default port 8080) that serves the dashboard and the REST API. With `SCALAXY_PEERS` configured, the node acts as a **gateway**: it routes key operations to ring owners over TCP, aggregates status from every peer's `/api/node-status`, and exposes the whole cluster in one console. See [REST API](/docs/rest-api/).
+
+## Consistency model
+
+The graph layer shares the ring's consistency story: a Cypher mutation
+that creates or updates entities is applied through `node-put`/`node-delete`
+on the ring owner and replicated synchronously, so acknowledged graph
+writes survive crashes and fail over to replicas.  `CREATE`, `MERGE`,
+`SET`, `REMOVE`, and `DELETE` all flow through the durable log.
 
 ## Failure model
 

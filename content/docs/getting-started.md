@@ -1,6 +1,6 @@
 ---
 date: 2026-08-06
-lastmod: 2026-08-06
+lastmod: 2026-08-17
 title: "Getting started"
 description: "Install SBCL, clone Scalaxy, run the tests, and start your first node."
 weight: 10
@@ -25,7 +25,9 @@ cd scalaxy
 make test
 ```
 
-This runs **8,654 checks** across 13 groups: consistent hashing, durable storage, protocol round-trips, replication, cluster churn, real TCP traffic, JSON, HTTP, the web API, gateway routing, status aggregation, and node-failure failover.
+This runs **9,018 checks** across 34 groups: consistent hashing, durable storage, protocol round-trips, replication, cluster churn, real TCP traffic, JSON, HTTP, the web API, gateway routing, status aggregation, node-failure failover, the property-graph layer, the openCypher engine (lexer, parser, AST round-trips, executor, semantics, updates, TCP/gateway/web integration, and a differential harness against a reference oracle), multi-database support, binary codec, and blob spills.
+
+A separate **conformance suite** runs the official openCypher TCK (3,897 scenarios): 2,252 pass, 500 fail, 1,145 are classified unsupported (mostly temporal types and stored procedures).  See [Cypher certification](/docs/cypher/).
 
 ## Start a node
 
@@ -56,6 +58,27 @@ curl -X PUT http://127.0.0.1:8080/api/keys/greeting -d '{"value":"hello world"}'
 curl http://127.0.0.1:8080/api/keys/greeting
 # => {"key":"greeting","size":11,"utf8":"hello world","hex":"68656C6C6F20776F726C64"}
 ```
+
+## Query the graph
+
+Every database also holds a property graph, queried with openCypher through
+the same node:
+
+```sh
+curl -X POST http://127.0.0.1:8080/api/cypher \
+  -d '{"query":"CREATE (p:Person {name: \"Alice\"})-[:KNOWS]->(q:Person {name: \"Bob\"}) RETURN p.name AS from, q.name AS to"}'
+# => {"columns":["from","to"],"rows":[["Alice","Bob"]],"count":1}
+
+curl -X POST http://127.0.0.1:8080/api/cypher \
+  -d '{"query":"MATCH (a:Person)-[:KNOWS]->(b:Person) RETURN a.name, b.name"}'
+```
+
+The language covers `MATCH` / `OPTIONAL MATCH` / `WHERE` / `WITH` /
+`RETURN` / `UNWIND` / `ORDER BY` / `SKIP` / `LIMIT` / `DISTINCT` /
+`UNION`, `CREATE` / `MERGE` / `SET` / `REMOVE` / `DELETE` /
+`DETACH DELETE`, named paths, variable-length relationships, and full
+aggregation.  See [Graph database](/docs/graph-database/) and
+[Cypher](/docs/cypher/).
 
 ## From a Lisp REPL
 

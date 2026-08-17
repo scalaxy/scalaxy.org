@@ -4,10 +4,10 @@ description: "Deployment shapes for Scalaxy: single node, replicated cluster, an
 kicker: "Topologies"
 weight: 30
 date: 2026-08-06
-lastmod: 2026-08-06
+lastmod: 2026-08-17
 ---
 
-Scalaxy runs the same code in every topology; only the environment variables change. All topologies use the data-plane port `7200` (binary protocol) and the console port `8080` (web UI, REST API, `/healthz`).
+Scalaxy runs the same code in every topology; only the environment variables change. All topologies use the data-plane port `7200` (binary protocol) and the console port `8080` (web UI, REST API, `/healthz`). Graph entities and Cypher queries travel over the same ring and the same ports as keys — a cluster is a graph database, not a separate deployment.
 
 ## Single node
 

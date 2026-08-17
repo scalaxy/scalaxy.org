@@ -1,13 +1,17 @@
 ---
 date: 2026-08-06
-lastmod: 2026-08-06
+lastmod: 2026-08-17
 title: "Use Cases"
 description: "Where Scalaxy fits: workloads, deployment shapes, and the problems it solves."
 kicker: "Use cases"
 weight: 20
 ---
 
-Scalaxy is a small, durable key/value database that shards keys, replicates writes, and serves its own console. If that is what you need, without standing up a database cluster, these are the workloads it fits.
+Scalaxy is a small, durable **graph & key/value** database: keys shard
+across nodes with consistent hashing, writes replicate synchronously,
+every database also holds a property graph queried with the openCypher
+language, and every node serves its own console.  These are the workloads
+it fits.
 
 ## Session & user data
 
@@ -40,10 +44,30 @@ The in-process cluster API (`make-cluster`) is also usable as an embedded librar
 
 ## Demos, labs, and education
 
-Nothing to install, a test suite with 8,654 checks, and a protocol you can read in one sitting make it easy to teach and experiment with. `make test` drives real TCP connections, replication, failover, and crash recovery.
+Nothing to install, a test suite with 9,018 checks, an openCypher TCK
+harness, and a protocol you can read in one sitting make it easy to teach
+and experiment with. `make test` drives real TCP connections,
+replication, failover, crash recovery, and the Cypher engine end to end.
+
+## Graph workloads
+
+Graph data lives in the same store, the same ring, and the same
+durability log as keys — no second system to run:
+
+- **Relationship queries** — `MATCH (a:Person)-[:KNOWS]->(b:Person)`,
+  `OPTIONAL MATCH`, variable-length paths (`-[:TRIP*1..3]->`), named
+  paths, and full aggregation over grouped results.
+- **Entity stores with links** — profiles, orders, devices, and
+  everything that references everything else: `CREATE`, `MERGE`, `SET`,
+  `REMOVE`, and `DETACH DELETE` are all Cypher clauses on the same
+  replicated ring.
+- **Bulk analysis** — the shipped NYC taxi benchmark loads 2.9M
+  relationships in ~20 s on a laptop, so large scans are tractable on a
+  single node and shard across a cluster like any other data.
 
 ## When to consider something else
 
-- **Complex queries & joins** — Scalaxy is a key/value store; use a relational or document database for relational workloads.
+- **Deep analytics over huge scans** — the engine is row-materializing for
+  aggregation today; for terabyte-scale OLAP, a columnar engine remains a
+  better fit.
 - **Multi-datacenter consensus** — replication is synchronous and leader-based; for cross-region strong consistency look at consensus systems.
-- **Massive analytics** — columnar/analytical engines are a better fit for large scans.

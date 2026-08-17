@@ -1,6 +1,6 @@
 ---
 date: 2026-08-06
-lastmod: 2026-08-06
+lastmod: 2026-08-17
 title: "Releasing"
 description: "The release process: versioning, tags, container images, and checks."
 weight: 120
@@ -8,7 +8,7 @@ weight: 120
 
 ## Versioning
 
-Scalaxy follows **semantic versioning** (`MAJOR.MINOR.PATCH`). The version lives in `src/web.lisp` (`+version+`) and in the ASDF system definition (`scalaxy.asd`).
+Scalaxy follows **semantic versioning** (`MAJOR.MINOR.PATCH`). The version lives in `src/web.lisp` (`+version+`), the ASDF system definition (`scalaxy.asd`), the web-console asset cache keys (`web/index.html`), the README badge, and `CITATION.cff`; the website mirrors it in `hugo.toml` (`params.version`) and `package.json`.
 
 ## Release checklist
 
