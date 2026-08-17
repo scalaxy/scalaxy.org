@@ -29,8 +29,9 @@ relationships, and string predicates.
 sbcl --script scripts/run-benchmark.lisp          # 20 iterations by default
 ```
 
-Reference (Apple Silicon MacBook, SBCL): dataset loads in ~40 ms; the
-slowest query (variable-length co-actors) is a few milliseconds.
+Reference (Apple Silicon MacBook, SBCL): dataset loads in ~41 ms, and
+the 15-query suite runs in ~0.06–3.2 ms per query (the slowest is
+"actors who directed themselves").
 
 ## NYC taxi graph
 
