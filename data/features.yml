@@ -21,4 +21,4 @@
   text: Every database also holds a property graph — nodes with labels, typed relationships, properties, and adjacency/type/label indexes — stored on the same replicated, durable store.
 - icon: '<path d="M3 17l6-6 4 4 8-8M14 7h7v7"/>'
   title: openCypher query language
-  text: "Query graphs with the openCypher language: MATCH, CREATE, MERGE, SET, paths, variable-length relationships, and full aggregation — via TCP, the REST API, the Lisp client, or the web console. 2,252 of 3,897 openCypher TCK scenarios pass, with the rest classified by feature gap (see the certification report)."
+  text: "Query graphs with the openCypher language: MATCH, CREATE, MERGE, SET, paths, variable-length relationships, and full aggregation — via TCP, the REST API, the Lisp client, or the web console. 2,726 of 3,898 openCypher TCK scenarios pass, with the rest classified by feature gap (see the certification report)."

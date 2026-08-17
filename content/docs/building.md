@@ -38,7 +38,7 @@ gateway) and the Cypher engine (lexer, parser, AST round-trips, executor,
 semantics, updates, plus differential tests against a reference oracle).
 
 A second runner, `scripts/run-tck.lisp`, executes the **openCypher TCK**
-(3,897 scenarios from the official conformance suite) and classifies each
+(3,898 scenarios from the official conformance suite) and classifies each
 scenario as pass, fail, or unsupported; see [Cypher](/docs/cypher/).
 
 ## Project layout

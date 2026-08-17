@@ -36,21 +36,29 @@ a metacircular reference oracle used for differential testing.
 
 ## Conformance (openCypher TCK)
 
-The engine is measured against the **official openCypher TCK** — 3,897
+The engine is measured against the **official openCypher TCK** — 3,898
 scenarios (outline expansion included) — via `scripts/run-tck.lisp`:
 
 | Outcome | Scenarios |
 |---|---|
-| Pass | **2,252** |
-| Fail (bugs in supported features) | 500 |
-| Unsupported (declared out of scope) | 1,145 |
+| Pass | **2,726** |
+| Fail (bugs in supported features) | 6 |
+| Unsupported (declared out of scope) | 1,166 |
 
-The unsupported bucket is a declared gap list, not hidden failure: 1,054
+The unsupported bucket is a declared gap list, not hidden failure: 1,069
 scenarios need temporal types (`date`/`time`/`datetime`/`duration`), 52
-need stored procedures (`CALL`), 13 need `percentileCont`/`percentileDisc`,
-and the rest are small harness or error-kind corner cases.  The full
-breakdown, the certified feature list, and the per-scenario log are in the
-in-repository report: `docs/cypher-certification.md`.
+need stored procedures (`CALL`), 15 need full subquery update semantics
+(`control query`), 13 need `percentileCont`/`percentileDisc`, and the rest
+are small harness or error-kind corner cases (including six scenarios the
+openCypher spec itself cannot satisfy under three-valued null semantics).
+The full breakdown, the certified feature list, and the per-scenario log
+are in the in-repository report: `docs/cypher-certification.md`.
+
+The six remaining failures are narrow edge cases: three `RETURN`
+column-name fidelity checks (openCypher keeps the literal source text of an
+expression as its column name, e.g. `cOuNt( * )`), one variable-length
+`count(p)` multiplicity nuance, one label-predicate column-name form, and
+one `@skipGrammarCheck` map-key error-kind corner.
 
 ## Access points
 

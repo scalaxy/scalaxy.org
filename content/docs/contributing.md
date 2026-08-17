@@ -21,9 +21,9 @@ Scalaxy is an independent, open-source project. Contributions of code, documenta
 ## What to work on
 
 - Bugs found while running the 9,018-check suite or the openCypher TCK
-  (the 500 failing scenarios are logged in `specs/tck-results.txt`).
+  (the 6 failing scenarios are logged in `specs/tck-results.txt`).
 - Narrowing the TCK gap: temporal types (`date`/`time`/`datetime`/
-  `duration`, 1,054 scenarios), `percentileCont`/`percentileDisc`, and
+  `duration`, 1,069 scenarios), `percentileCont`/`percentileDisc`, and
   stored procedures are the biggest declared-unsupported buckets.
 - The roadmap in the README: snapshot-based catch-up for lagging replicas,
   a membership/join protocol, multi-key transactions, and streaming

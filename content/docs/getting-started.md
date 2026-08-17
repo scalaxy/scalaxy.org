@@ -27,7 +27,7 @@ make test
 
 This runs **9,018 checks** across 33 groups: consistent hashing, durable storage, protocol round-trips, replication, cluster churn, real TCP traffic, JSON, HTTP, the web API, gateway routing, status aggregation, node-failure failover, the property-graph layer, the openCypher engine (lexer, parser, AST round-trips, executor, semantics, updates, TCP/gateway/web integration, and a differential harness against a reference oracle), multi-database support, binary codec, and blob spills.
 
-A separate **conformance suite** runs the official openCypher TCK (3,897 scenarios): 2,252 pass, 500 fail, 1,145 are classified unsupported (mostly temporal types and stored procedures).  See [Cypher certification](/docs/cypher/).
+A separate **conformance suite** runs the official openCypher TCK (3,898 scenarios): 2,726 pass, 6 fail, 1,166 are classified unsupported (mostly temporal types and stored procedures).  See [Cypher certification](/docs/cypher/).
 
 ## Start a node
 
