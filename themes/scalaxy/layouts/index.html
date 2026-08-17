@@ -40,8 +40,8 @@
 
 <span class="cmt"># run a Cypher query against the graph</span>
 <span class="cmd">$</span> curl -X POST localhost:8080/api/cypher \
-           -d '{"query":"MATCH (m:Movie {title:\"The Matrix\"})<-[:ACTED_IN]-(p:Person) RETURN p.name AS actor ORDER BY actor"}'
-<span class="out">{"columns":["actor"],"rows":[["Keanu Reeves"],["Laurence Fishburne"]],"count":2}</span><span class="cursor"></span></code></pre>
+           -d '{"query":"MATCH (m:Movie {title:\"The Matrix\"})<-[:ACTED_IN]-(p:Person) RETURN p.name AS actor ORDER BY actor LIMIT 2"}'
+<span class="out">{"columns":["actor"],"rows":[["Carrie-Anne Moss"],["Emil Eifrem"]],"count":2}</span><span class="cursor"></span></code></pre>
     </div>
   </div>
 </section>
@@ -54,7 +54,7 @@
       <p>Scalaxy is a distributed graph &amp; key/value database that keeps things small: one binary, a web console served by the database itself, an openCypher engine for property graphs, and deployments that are just the binary plus a data directory.</p>
     </div>
     <div class="grid-3">
-      {{ range .Site.Data.features }}
+      {{ range hugo.Data.features }}
       <div class="card">
         <svg class="fico" viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">{{ .icon | safeHTML }}</svg>
         <h3>{{ .title }}</h3>

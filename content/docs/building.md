@@ -32,7 +32,7 @@ sbcl --script scripts/run-tests.lisp
 
 The suite is intentionally **dependency-free** — plain assertions, no test framework — so it runs anywhere SBCL runs, including CI. It exercises real sockets (TCP and HTTP on ephemeral ports), real crash-recovery behavior through log replay, and the openCypher engine end to end (TCP, gateway, and web layers included).
 
-The **9,018 checks** span 34 groups, from consistent hashing and durable
+The **9,018 checks** span 33 groups, from consistent hashing and durable
 storage through the graph layer (storage, blobs, persistence, multi-db,
 gateway) and the Cypher engine (lexer, parser, AST round-trips, executor,
 semantics, updates, plus differential tests against a reference oracle).

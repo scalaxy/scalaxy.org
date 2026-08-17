@@ -53,7 +53,7 @@ sbcl --script scripts/run-benchmark-nyc.lisp per-trip 200000 5   # interactive s
 sbcl --dynamic-space-size 8192 --script scripts/run-benchmark-nyc.lisp per-trip "" 1
 ```
 
-Reference: aggregated-mode queries run in ~0.2–190 ms (a full-table
+Reference: aggregated-mode queries run in ~0.3–190 ms (a full-table
 `count(*)` over 25,711 edges ~170 ms); per-trip queries over 100,000 edges
 ~0.5–0.8 s.  The suite surfaced a known scalability area: `MATCH`
 materializes rows before aggregation, so whole-graph aggregations over the

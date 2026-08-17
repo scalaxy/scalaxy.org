@@ -1,6 +1,6 @@
 ---
 date: 2026-08-06
-lastmod: 2026-08-06
+lastmod: 2026-08-17
 title: "Operations"
 description: "Health checks, failure behavior, durability, and troubleshooting."
 weight: 90
@@ -25,6 +25,9 @@ weight: 90
 
 - Every acknowledged write is appended to `scalaxy.log` in `SCALAXY_DATA_DIR` before the client receives the ack.
 - The log is the same record format as the network protocol — replay is exact.
+- Graph entities (nodes, relationships, properties) are ordinary records in
+  the same store, so `CREATE`/`MERGE`/`SET`/`DELETE` mutations ride the
+  same durability and replication path as keys.
 - Mount `SCALAXY_DATA_DIR` on persistent storage (a Docker volume, a Kubernetes PVC) to survive container restarts.
 
 ## Troubleshooting
