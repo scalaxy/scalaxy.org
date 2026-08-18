@@ -6,7 +6,7 @@ enableRobotsTXT = true
 disableKinds = ["taxonomy", "term"]
 
 [params]
-  description = "A distributed graph & key/value database written in Common Lisp: the openCypher query language, consistent-hash sharding, synchronous replication, a built-in web console, zero external dependencies."
+  description = "A distributed graph and key/value database written in Common Lisp: the openCypher query language, consistent-hash sharding, synchronous replication, a built-in web console, zero external dependencies."
   version = "1.8.0"
   repo = "https://github.com/scalaxy/scalaxy"
   domain = "scalaxy.org"
