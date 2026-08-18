@@ -1,6 +1,12 @@
+- icon: '<circle cx="12" cy="12" r="9"/><circle cx="5.5" cy="5.5" r="1.5"/><circle cx="18.5" cy="5.5" r="1.5"/><circle cx="12" cy="17" r="1.5"/><path d="M6.5 6.5l5.5 9M17.5 6.5l-5.5 9"/>'
+  title: Property graph store
+  text: "Every Scalaxy database stores a property graph: nodes with labels, typed relationships, and properties, on the same durable, replicated store as your keys."
+- icon: '<path d="M3 17l6-6 4 4 8-8M14 7h7v7"/>'
+  title: openCypher query language
+  text: "Query graphs with openCypher: MATCH, CREATE, MERGE, SET, paths, and aggregation — from the REST API, the Lisp client, TCP, or the web console. 2,726 of 3,898 openCypher TCK scenarios pass; the rest are documented feature gaps (see the certification report)."
 - icon: '<circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="2"/><path d="M3 12h7M14 12h7"/>'
   title: Consistent-hash sharding
-  text: Keys are spread across the ring. When you add or remove a node, only about 1/N of the keys move — the rest stay put.
+  text: "Data is spread across the ring. When you add or remove a node, only about 1/N of the data moves — the rest stays put."
 - icon: '<path d="M20 12H8M12 6l-6 6 6 6"/><path d="M4 12h8"/>'
   title: Synchronous replication
   text: Every write is copied to the next node on the ring and confirmed before you get a response. If a node dies, reads keep working from the replicas.
@@ -16,9 +22,3 @@
 - icon: '<path d="M8 9l-4 3 4 3M16 9l4 3-4 3M13 6l-2 12"/>'
   title: Zero external dependencies
   text: Pure ANSI Common Lisp running on SBCL. JSON and HTTP are built in, so there is nothing to install.
-- icon: '<circle cx="12" cy="12" r="9"/><circle cx="5.5" cy="5.5" r="1.5"/><circle cx="18.5" cy="5.5" r="1.5"/><circle cx="12" cy="17" r="1.5"/><path d="M6.5 6.5l5.5 9M17.5 6.5l-5.5 9"/>'
-  title: Graph database layer
-  text: "Every database also holds a property graph: nodes with labels, typed relationships, and properties, stored with the same replication and durability as your key/value data."
-- icon: '<path d="M3 17l6-6 4 4 8-8M14 7h7v7"/>'
-  title: openCypher query language
-  text: "Query graphs with openCypher: MATCH, CREATE, MERGE, SET, paths, and aggregation — from the REST API, the Lisp client, TCP, or the web console. 2,726 of 3,898 openCypher TCK scenarios pass; the rest are documented feature gaps (see the certification report)."

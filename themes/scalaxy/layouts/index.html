@@ -7,8 +7,8 @@
         <span class="badge green"><span class="dot"></span>Distributed</span>
         <span class="badge green"><span class="dot"></span>Open Source · MIT</span>
       </div>
-      <h1>A distributed graph and key/value database in Common Lisp.</h1>
-      <p class="hero-sub">One binary you can run anywhere: a laptop, a few servers, or Kubernetes. It has a built-in web console, understands openCypher, and replicates writes across nodes automatically. Nothing else to install.</p>
+      <h1>A graph database in Common Lisp.</h1>
+      <p class="hero-sub">Query property graphs with openCypher, browse them in a built-in web console, and replicate writes across nodes automatically — all from one binary. Nothing else to install.</p>
       <div class="hero-ctas">
         <a class="btn btn-primary btn-lg" href="{{ "docs/" | relURL }}">Read the docs</a>
         <a class="btn btn-lg" href="{{ site.Params.repo }}" target="_blank" rel="noopener">View on GitHub</a>
@@ -51,7 +51,7 @@
     <div class="section-head">
       <div class="kicker">Overview</div>
       <h2>What is Scalaxy</h2>
-      <p>Scalaxy is a graph and key/value database that fits in one binary. The database serves its own web console and includes an openCypher engine, so a deployment is a single file plus a data directory: no server stack, no separate frontend, nothing extra to install.</p>
+      <p>Scalaxy is a graph database written in Common Lisp. It stores property graphs — nodes with labels, typed relationships, and properties — and answers openCypher queries against them. Everything runs in one binary with a built-in web console, and the same store handles plain keys when you need them.</p>
     </div>
     <div class="grid-3">
       {{ range site.Data.features }}

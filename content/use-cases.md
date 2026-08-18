@@ -7,11 +7,26 @@ kicker: "Use cases"
 weight: 20
 ---
 
-Scalaxy is a small, durable **graph and key/value** database: keys shard
-across nodes with consistent hashing, writes replicate synchronously,
-every database also holds a property graph queried with the openCypher
-language, and every node serves its own console.  These are the workloads
-it fits.
+Scalaxy is a graph database written in Common Lisp. Every database stores
+property graphs queried with openCypher, writes replicate synchronously,
+and each node serves its own console. It also works as a plain key/value
+store when you need one. These are the workloads it fits.
+
+## Graph workloads
+
+Graph data lives in the same store, the same ring, and the same
+durability log as keys — no second system to run:
+
+- **Relationship queries** — `MATCH (a:Person)-[:KNOWS]->(b:Person)`,
+  `OPTIONAL MATCH`, variable-length paths (`-[:TRIP*1..3]->`), named
+  paths, and full aggregation over grouped results.
+- **Entity stores with links** — profiles, orders, devices, and
+  everything that references everything else: `CREATE`, `MERGE`, `SET`,
+  `REMOVE`, and `DETACH DELETE` are all Cypher clauses on the same
+  replicated ring.
+- **Bulk analysis** — the shipped NYC taxi benchmark loads 2.9M
+  relationships in ~20 s on a laptop, so large scans are tractable on a
+  single node and shard across a cluster like any other data.
 
 ## Session and user data
 
@@ -48,22 +63,6 @@ Nothing to install, a test suite with 9,018 checks, an openCypher TCK
 harness, and a protocol you can read in one sitting make it easy to teach
 and experiment with. `make test` drives real TCP connections,
 replication, failover, crash recovery, and the Cypher engine end to end.
-
-## Graph workloads
-
-Graph data lives in the same store, the same ring, and the same
-durability log as keys — no second system to run:
-
-- **Relationship queries** — `MATCH (a:Person)-[:KNOWS]->(b:Person)`,
-  `OPTIONAL MATCH`, variable-length paths (`-[:TRIP*1..3]->`), named
-  paths, and full aggregation over grouped results.
-- **Entity stores with links** — profiles, orders, devices, and
-  everything that references everything else: `CREATE`, `MERGE`, `SET`,
-  `REMOVE`, and `DETACH DELETE` are all Cypher clauses on the same
-  replicated ring.
-- **Bulk analysis** — the shipped NYC taxi benchmark loads 2.9M
-  relationships in ~20 s on a laptop, so large scans are tractable on a
-  single node and shard across a cluster like any other data.
 
 ## When to consider something else
 
