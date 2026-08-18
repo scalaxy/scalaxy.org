@@ -1,24 +1,24 @@
 - icon: '<circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="2"/><path d="M3 12h7M14 12h7"/>'
   title: Consistent-hash sharding
-  text: Keys are placed on a virtual-node ring (FNV-1a + SplitMix64). Adding or removing a node moves only ~1/N of the keys.
+  text: Keys are spread across the ring. When you add or remove a node, only about 1/N of the keys move — the rest stay put.
 - icon: '<path d="M20 12H8M12 6l-6 6 6 6"/><path d="M4 12h8"/>'
   title: Synchronous replication
-  text: Every write is forwarded to the next ring members and acknowledged before the client returns. Reads fail over to replicas.
+  text: Every write is copied to the next node on the ring and confirmed before you get a response. If a node dies, reads keep working from the replicas.
 - icon: '<ellipse cx="12" cy="5" rx="8" ry="3"/><path d="M4 5v6c0 1.7 3.6 3 8 3s8-1.3 8-3V5M4 11v6c0 1.7 3.6 3 8 3s8-1.3 8-3v-6"/>'
   title: Durable by default
-  text: Mutations are appended to a length-prefixed log and replayed on startup, so acknowledged writes survive crashes and restarts.
+  text: Writes go to an append-only log that is replayed on startup. If a node crashes, the writes you were told succeeded are still there.
 - icon: '<rect x="3" y="5" width="18" height="12" rx="2"/><path d="M8 20h8M12 17v3"/>'
   title: Web console included
-  text: "Every node serves its own console over HTTP: cluster overview, data browser, topology view, and a command console."
+  text: "Each node serves its own console over HTTP: cluster overview, data browser, topology view, and a command console. No frontend to build."
 - icon: '<path d="M12 3l8 4.5v9L12 21l-8-4.5v-9L12 3z"/><path d="M4 7.5l8 4.5 8-4.5M12 12v9"/>'
   title: Runs in containers
-  text: Docker, docker-compose, and Kubernetes manifests live in the repository. Configuration is environment variables.
+  text: Docker, docker-compose, and Kubernetes files are all included. Set a few environment variables and you're running.
 - icon: '<path d="M8 9l-4 3 4 3M16 9l4 3-4 3M13 6l-2 12"/>'
   title: Zero external dependencies
-  text: Pure ANSI Common Lisp plus SBCL sockets. JSON and HTTP are implemented in-tree, so there is nothing to install.
+  text: Pure ANSI Common Lisp running on SBCL. JSON and HTTP are built in, so there is nothing to install.
 - icon: '<circle cx="12" cy="12" r="9"/><circle cx="5.5" cy="5.5" r="1.5"/><circle cx="18.5" cy="5.5" r="1.5"/><circle cx="12" cy="17" r="1.5"/><path d="M6.5 6.5l5.5 9M17.5 6.5l-5.5 9"/>'
   title: Graph database layer
-  text: Every database also holds a property graph — nodes with labels, typed relationships, properties, and adjacency/type/label indexes — stored on the same replicated, durable store.
+  text: "Every database also holds a property graph: nodes with labels, typed relationships, and properties, stored with the same replication and durability as your key/value data."
 - icon: '<path d="M3 17l6-6 4 4 8-8M14 7h7v7"/>'
   title: openCypher query language
-  text: "Query graphs with the openCypher language: MATCH, CREATE, MERGE, SET, paths, variable-length relationships, and full aggregation — via TCP, the REST API, the Lisp client, or the web console. 2,726 of 3,898 openCypher TCK scenarios pass, with the rest classified by feature gap (see the certification report)."
+  text: "Query graphs with openCypher: MATCH, CREATE, MERGE, SET, paths, and aggregation — from the REST API, the Lisp client, TCP, or the web console. 2,726 of 3,898 openCypher TCK scenarios pass; the rest are documented feature gaps (see the certification report)."

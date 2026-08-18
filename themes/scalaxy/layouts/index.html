@@ -8,7 +8,7 @@
         <span class="badge green"><span class="dot"></span>Open Source · MIT</span>
       </div>
       <h1>A distributed graph &amp; key/value database in Common Lisp.</h1>
-      <p class="hero-sub">One binary, a built-in web console, no external dependencies. Query property graphs with the openCypher language, shard keys across nodes with consistent hashing, replicate writes synchronously, and log every mutation durably.</p>
+      <p class="hero-sub">One binary you can run anywhere: a laptop, a few servers, or Kubernetes. It has a built-in web console, understands openCypher, and replicates writes across nodes automatically. Nothing else to install.</p>
       <div class="hero-ctas">
         <a class="btn btn-primary btn-lg" href="{{ "docs/" | relURL }}">Read the docs</a>
         <a class="btn btn-lg" href="{{ site.Params.repo }}" target="_blank" rel="noopener">View on GitHub</a>
@@ -51,7 +51,7 @@
     <div class="section-head">
       <div class="kicker">Overview</div>
       <h2>What is Scalaxy</h2>
-      <p>Scalaxy is a distributed graph &amp; key/value database that keeps things small: one binary, a web console served by the database itself, an openCypher engine for property graphs, and deployments that are just the binary plus a data directory.</p>
+      <p>Scalaxy is a graph and key/value database that fits in one binary. The database serves its own web console and includes an openCypher engine, so a deployment is a single file plus a data directory: no server stack, no separate frontend, nothing extra to install.</p>
     </div>
     <div class="grid-3">
       {{ range site.Data.features }}
@@ -70,7 +70,7 @@
     <div class="section-head">
       <div class="kicker">Screenshots</div>
       <h2>The web console</h2>
-      <p>Every node serves the console over HTTP. No separate frontend to build or deploy.</p>
+      <p>Every node serves its own console over HTTP. No separate frontend to build or deploy.</p>
     </div>
     <div class="grid-2">
       <figure class="screenshot">
@@ -98,7 +98,7 @@
     <div class="grid-3">
       <div class="card">
         <h3><span class="dim">01</span> · Install</h3>
-        <p>You need SBCL 2.x. Clone the repository and run <code>make test</code>. There is nothing else to install.</p>
+        <p>You need SBCL 2.x. Clone the repository, run <code>make test</code>, and you're done — there's nothing else to install.</p>
         <a class="card-link" href="{{ "docs/getting-started/" | relURL }}">Getting started →</a>
       </div>
       <div class="card">
