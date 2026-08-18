@@ -8,11 +8,11 @@ weight: 120
 
 ## Versioning
 
-Scalaxy follows **semantic versioning** (`MAJOR.MINOR.PATCH`). The version lives in `src/web.lisp` (`+version+`), the ASDF system definition (`scalaxy.asd`), the web-console asset cache keys (`web/index.html`), the README badge, and `CITATION.cff`; the website mirrors it in `hugo.toml` (`params.version`) and `package.json`.
+Scalaxy follows **semantic versioning** (`MAJOR.MINOR.PATCH`). The version lives in {{< src "src/web.lisp" >}} (`+version+`), the ASDF system definition ({{< src "scalaxy.asd" >}}), the web-console asset cache keys ({{< src "web/index.html" >}}), the README badge, and {{< src "CITATION.cff" >}}; the website mirrors it in `hugo.toml` (`params.version`) and `package.json`.
 
 ## Release checklist
 
-1. **Update the version** in `scalaxy.asd` and `src/web.lisp`.
+1. **Update the version** in {{< src "scalaxy.asd" >}} and {{< src "src/web.lisp" >}}.
 2. **Run the full suite** locally and in CI:
 
    ```sh
@@ -39,7 +39,7 @@ Scalaxy follows **semantic versioning** (`MAJOR.MINOR.PATCH`). The version lives
 
 ## CI
 
-The repository ships a GitHub Actions workflow (`.github/workflows/ci.yml`) that installs SBCL and runs `scripts/run-tests.lisp` on every push. The Docker build also runs the full suite at image-build time, so a release build that fails tests cannot produce an image.
+The repository ships a GitHub Actions workflow ({{< src ".github/workflows/ci.yml" >}}) that installs SBCL and runs {{< src "scripts/run-tests.lisp" >}} on every push. The Docker build also runs the full suite at image-build time, so a release build that fails tests cannot produce an image.
 
 ## Rolling back
 

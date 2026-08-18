@@ -9,7 +9,7 @@
       {{ .Content }}
     </article>
     <div class="doc-meta">
-      <span><a href="{{ site.Params.repo }}/blob/master/content/{{ .File.Path }}">Edit on GitHub</a></span>
+      <span><a href="{{ site.Params.website_repo | default site.Params.repo }}/blob/main/content/{{ .File.Path }}">Edit on GitHub</a></span>
     </div>
     {{ partial "docs-pager.html" . }}
   </div>

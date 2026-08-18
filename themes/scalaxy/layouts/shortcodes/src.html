@@ -1,0 +1,4 @@
+{{- $repo := site.Params.repo | default "https://github.com/scalaxy/scalaxy" -}}
+{{- $branch := "master" -}}
+{{- $path := .Get 0 | default (.Get "path") -}}
+<a href="{{ $repo }}/blob/{{ $branch }}/{{ $path }}" class="src-link" target="_blank" rel="noopener"><code>{{ $path }}</code></a>

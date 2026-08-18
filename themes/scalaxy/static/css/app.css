@@ -186,6 +186,8 @@ a:hover { color: var(--accent-strong); }
   font-family: var(--mono); font-size: 0.85em; background: var(--code-bg);
   border: 1px solid var(--code-border); border-radius: 5px; padding: 1.5px 6px; color: #1d39c4;
 }
+.prose a.src-link code { text-decoration: underline; text-underline-offset: 3px; }
+.prose a.src-link:hover code { background: #eef2ff; }
 .prose pre {
   background: var(--code-bg); border: 1px solid var(--code-border); border-radius: var(--radius);
   padding: 18px 20px; overflow-x: auto; margin: 18px 0 22px; position: relative;

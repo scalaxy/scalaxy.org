@@ -8,7 +8,7 @@ weight: 35
 
 Scalaxy implements the **openCypher** query language for its graph layer,
 entirely in Common Lisp (SBCL) with zero external dependencies.  The
-compiler pipeline lives in `src/cypher/`: lexer → parser → AST (with a
+compiler pipeline lives in {{< src "src/cypher/" >}}: lexer → parser → AST (with a
 canonical printer) → semantic analysis → executor, plus a wire format and
 a metacircular reference oracle used for differential testing.
 
@@ -37,7 +37,7 @@ a metacircular reference oracle used for differential testing.
 ## Conformance (openCypher TCK)
 
 The engine is measured against the **official openCypher TCK** — 3,898
-scenarios (outline expansion included) — via `scripts/run-tck.lisp`:
+scenarios (outline expansion included) — via {{< src "scripts/run-tck.lisp" >}}:
 
 | Outcome | Scenarios |
 |---|---|

@@ -25,8 +25,8 @@ extra to deploy.
 ## Storage
 
 - **Over the KV store** — nodes, relationships, and the index structures
-  are ordinary records in the replicated store (`src/graph.lisp`,
-  `src/db.lisp`, `src/codec.lisp`), so they are sharded by consistent
+  are ordinary records in the replicated store ({{< src "src/graph.lisp" >}},
+  {{< src "src/db.lisp" >}}, {{< src "src/codec.lisp" >}}), so they are sharded by consistent
   hashing, appended to the durability log, and replayed on startup like
   any other mutation.
 - **Indexes** — label, type, and adjacency (outgoing/incoming) indexes

@@ -53,7 +53,7 @@ Each node keeps an in-memory hash table plus an **append-only log** using the sa
 ## Graph storage & Cypher engine
 
 On top of the replicated key/value store sits a **property-graph layer**
-(`src/graph.lisp`, `src/db.lisp`, `src/codec.lisp`):
+({{< src "src/graph.lisp" >}}, {{< src "src/db.lisp" >}}, {{< src "src/codec.lisp" >}}):
 
 - **Nodes & relationships** — every node has an id, a label set, and a
   property map; every relationship has an id, a type, start/end node ids,
@@ -63,7 +63,7 @@ On top of the replicated key/value store sits a **property-graph layer**
 - **Multi-database** — a database is a namespaced partition of the same
   ring; graph entities, keys, and the durability log all live in the one
   replicated store.
-- **openCypher engine** (`src/cypher/`) — a full compiler pipeline in pure
+- **openCypher engine** ({{< src "src/cypher/" >}}) — a full compiler pipeline in pure
   Common Lisp: lexer → parser → AST (with canonical printer) → semantic
   analysis → executor, plus a wire format and a metacircular reference
   oracle used for differential testing.  The executor is symbolically

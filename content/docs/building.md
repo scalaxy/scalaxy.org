@@ -37,7 +37,7 @@ storage through the graph layer (storage, blobs, persistence, multi-db,
 gateway) and the Cypher engine (lexer, parser, AST round-trips, executor,
 semantics, updates, plus differential tests against a reference oracle).
 
-A second runner, `scripts/run-tck.lisp`, executes the **openCypher TCK**
+A second runner, {{< src "scripts/run-tck.lisp" >}}, executes the **openCypher TCK**
 (3,898 scenarios from the official conformance suite) and classifies each
 scenario as pass, fail, or unsupported; see [Cypher](/docs/cypher/).
 

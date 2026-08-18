@@ -9,6 +9,7 @@ disableKinds = ["taxonomy", "term"]
   description = "A graph database written in Common Lisp: openCypher for property graphs, consistent-hash sharding, synchronous replication, a built-in web console, zero external dependencies."
   version = "1.8.0"
   repo = "https://github.com/scalaxy/scalaxy"
+  website_repo = "https://github.com/scalaxy/scalaxy.org"
   domain = "scalaxy.org"
   author = "Artem Andreenko"
   author_github = "miolini"

@@ -59,8 +59,8 @@ node   -> client: 00 00 00 0d 0b 00 00 00 00 00 00 00 03 76 61 6c
 
 ## Implementation
 
-The encoder/decoder live in `src/protocol.lisp` (`encode-message`, `decode-message`, `frame-message`). The TCP transport is in `src/tcp.lisp`; hostnames are resolved with `resolve-host`, so peers can be addressed by DNS name in containers and Kubernetes.
+The encoder/decoder live in {{< src "src/protocol.lisp" >}} (`encode-message`, `decode-message`, `frame-message`). The TCP transport is in {{< src "src/tcp.lisp" >}}; hostnames are resolved with `resolve-host`, so peers can be addressed by DNS name in containers and Kubernetes.
 
 {{< callout type="note" >}}
-The protocol is small on purpose: it keeps the database easy to audit, reimplement, and embed. A full reference of every opcode's exact byte layout is in the docstrings of `src/protocol.lisp`.
+The protocol is small on purpose: it keeps the database easy to audit, reimplement, and embed. A full reference of every opcode's exact byte layout is in the docstrings of {{< src "src/protocol.lisp" >}}.
 {{< /callout >}}
