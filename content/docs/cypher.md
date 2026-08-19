@@ -1,8 +1,8 @@
 ---
 date: 2026-08-17
-lastmod: 2026-08-17
+lastmod: 2026-08-18
 title: "Cypher"
-description: "The openCypher query language in Scalaxy: coverage, conformance certification, and access points."
+description: "The openCypher query language in Scalaxy: coverage, TCK conformance, and access points."
 weight: 35
 ---
 
@@ -36,29 +36,27 @@ a metacircular reference oracle used for differential testing.
 
 ## Conformance (openCypher TCK)
 
-The engine is measured against the **official openCypher TCK** — 3,898
-scenarios (outline expansion included) — via {{< src "scripts/run-tck.lisp" >}}:
+Scalaxy currently passes the complete **openCypher TCK**: all 3,898
+expanded scenarios execute successfully with no failures or unsupported
+cases. The local runner intentionally executes every corpus case, including
+the scenario marked `@ignore` in the upstream feature file.
 
 | Outcome | Scenarios |
-|---|---|
-| Pass | **2,726** |
-| Fail (bugs in supported features) | 6 |
-| Unsupported (declared out of scope) | 1,166 |
+|---|---:|
+| Pass | **3,898** |
+| Fail | **0** |
+| Unsupported | **0** |
 
-The unsupported bucket is a declared gap list, not hidden failure: 1,069
-scenarios need temporal types (`date`/`time`/`datetime`/`duration`), 52
-need stored procedures (`CALL`), 15 need full subquery update semantics
-(`control query`), 13 need `percentileCont`/`percentileDisc`, and the rest
-are small harness or error-kind corner cases (including six scenarios the
-openCypher spec itself cannot satisfy under three-valued null semantics).
-The full breakdown, the certified feature list, and the per-scenario log
-are in the in-repository report: `docs/cypher-certification.md`.
+Run the same check from the repository root with:
 
-The six remaining failures are narrow edge cases: three `RETURN`
-column-name fidelity checks (openCypher keeps the literal source text of an
-expression as its column name, e.g. `cOuNt( * )`), one variable-length
-`count(p)` multiplicity nuance, one label-predicate column-name form, and
-one `@skipGrammarCheck` map-key error-kind corner.
+```sh
+sbcl --script scripts/run-tck.lisp
+```
+
+This is a reproducible TCK conformity result for the current Scalaxy
+implementation; it is not a claim of third-party certification by the
+openCypher project. The detailed runner and feature corpus are kept in the
+repository alongside the implementation.
 
 ## Access points
 
