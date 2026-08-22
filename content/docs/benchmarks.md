@@ -1,6 +1,6 @@
 ---
 date: 2026-08-17
-lastmod: 2026-08-17
+lastmod: 2026-08-21
 title: "Benchmarks"
 description: "Two shipped benchmark datasets (the Neo4j Movie Graph and the NYC taxi graph), with provenance and reference timings."
 weight: 55
@@ -48,18 +48,36 @@ The per-trip graph loads in ~20 s with an 8 GB heap. This measures a
 and trip parquet and regenerates the CSV inputs; the raw downloads and the
 large per-trip CSV are git-ignored.
 
-```sh
-sbcl --script scripts/run-benchmark-nyc.lisp aggregated "" 20    # 25,711 edges
-sbcl --script scripts/run-benchmark-nyc.lisp per-trip 200000 5   # interactive size
-sbcl --dynamic-space-size 8192 --script scripts/run-benchmark-nyc.lisp per-trip "" 1
-```
+### S3-backed cluster benchmarks
 
-Reference: aggregated-mode queries run in ~0.3–190 ms (a full-table
-`count(*)` over 25,711 edges ~170 ms); per-trip queries over 100,000 edges
-~0.5–0.8 s.  The suite surfaced a known scalability area: `MATCH`
-materializes rows before aggregation, so whole-graph aggregations over the
-full 2.93M-edge graph need a large heap (streaming aggregation is future
-work).
+The full per-trip graph (2,933,097 relationships) deployed on a
+3-node Garage S3 cluster with lazy loading, local persistent caches,
+and aggregate summaries:
+
+| Query | Latency | Notes |
+|---|---|---|
+| Unlabeled count (`count(*)`) | 5 ms | served from type-count summary |
+| Labeled count (Zone→Zone) | 6–80 ms | served from endpoint-pair tables |
+| Labeled sum (distance) | 7–29 ms | served from per-property sums |
+| Top-5 ORDER BY DESC | 3 ms | top-k summary |
+| Zone count | 3 ms | label-ID summary |
+| Cache hit rate (warm) | 100 % | zero S3 GETs after warm-up |
+| Restart to first query | < 4 min | full index rebuild from sidecars + cache |
+
+All timings measured on Apple Silicon MacBook with Docker containers.
+Cache is fully warm after the initial load; steady-state queries never
+touch the network.
+
+### Write-path characteristics
+
+Single-object creates are acknowledged synchronously with replication.
+Deletes are immediately visible without restart. Bulk ingestion uses
+packed batches of up to 20 000 records per S3 object.
+
+After any write, aggregate summaries are invalidated for relationship
+mutations (targeted invalidation preserves caches on node-property
+updates). The next read rebuilds affected summaries from the in-memory
+index — a one-time cost per write batch, not per query.
 
 Full provenance, license notes, file layout, and timings are in
 `benchmarks/movies/README.md` and `benchmarks/nyc-taxi/README.md`.

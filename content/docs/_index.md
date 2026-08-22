@@ -1,6 +1,6 @@
 ---
 date: 2026-08-06
-lastmod: 2026-08-17
+lastmod: 2026-08-21
 title: "Documentation"
 description: "Documentation for Scalaxy developers and maintainers."
 weight: 0
@@ -12,8 +12,10 @@ Welcome to the Scalaxy documentation. Pick a section below, or browse the sideba
 - **Getting started**: install, run your first node, and build the project.
 - **Graph & Cypher**: the property-graph layer, the openCypher language,
   its conformance result, and the shipped benchmark datasets.
-- **Architecture**: how the ring, replication, storage, graph layer, and
-  console fit together.
+- **Architecture**: how the ring, replication, S3-backed lazy storage,
+  aggregate summaries, and console fit together.
+- **S3 object storage**: packed segments, local persistent cache,
+  sidecar metadata, aggregate summaries, encryption at rest, and re-homing.
 - **Reference**: the wire protocol, the REST API, and the Lisp client.
-- **Operations**: deployment, Kubernetes, health, and troubleshooting.
+- **Operations**: deployment, Kubernetes, health, encryption, and troubleshooting.
 - **Maintainers**: releasing, CI, and project governance.

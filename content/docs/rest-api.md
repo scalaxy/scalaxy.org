@@ -111,3 +111,21 @@ Errors return JSON with an `error` field and the appropriate status code:
 ```
 
 `404` for unknown routes or missing keys, `400` for malformed bodies, `500` for internal errors.
+
+## Re-home
+
+Moves keys held by this node but owned by another peer to their ring
+owner.  Used for presence repair after node crashes or topology changes.
+
+```sh
+curl -X POST http://localhost:8080/api/rehome \
+  -H 'Content-Type: application/json' \
+  -d '{"limit": 10000, "keep": true}'
+```
+
+| Parameter | Default | Description |
+|---|---|---|
+| `limit` | 1000 | Maximum keys to process |
+| `keep` | false | Retain local copy after delivery |
+
+Response: `{"moved": N, "skipped": M}`

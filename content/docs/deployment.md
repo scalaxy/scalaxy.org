@@ -1,6 +1,6 @@
 ---
 date: 2026-08-06
-lastmod: 2026-08-06
+lastmod: 2026-08-21
 title: "Deployment"
 description: "Docker, docker-compose, and the SCALAXY_* configuration reference."
 weight: 70
@@ -18,45 +18,63 @@ Scalaxy is configured entirely through environment variables (or CLI flags).
 | `SCALAXY_DATA_DIR` | `./scalaxy-data` | Durability log directory |
 | `SCALAXY_PEERS` | *(none)* | Cluster topology: `id=host:data-port[:http-port],...` |
 | `SCALAXY_REPLICATE_TO` | *(none)* | Synchronous replication targets (same format) |
-| `SCALAXY_WEB_DIR` | `web/` | Console assets location |
+| `SCALAXY_WEB_DIR` | `web/` | Console static files |
+| `SCALAXY_STORE_BACKEND` | *(none)* | Set to `s3` for S3 object storage |
+| `SCALAXY_S3_ENDPOINT` | *(none)* | S3-compatible endpoint URL |
+| `SCALAXY_S3_BUCKET` | *(none)* | Per-node S3 bucket |
+| `SCALAXY_S3_ACCESS_KEY` | *(none)* | S3 access key |
+| `SCALAXY_S3_SECRET_KEY` | *(none)* | S3 secret key |
+| `SCALAXY_S3_REGION` | `us-east-1` | S3 region |
+| `SCALAXY_S3_PREFIX` | `scalaxy/` | Key prefix (node ID appended automatically) |
+| `SCALAXY_S3_LAZY` | `false` | Enable lazy loading and aggregate summaries |
+| `SCALAXY_S3_ENCRYPTION_KEY` | *(none)* | Encrypt all S3 objects at rest |
+| `SCALAXY_S3_CACHE_MAX_BYTES` | unlimited | Local cache eviction budget |
 
-CLI equivalents: `--address`, `--http-address`, `--data-dir`, `--id`, `--peers`, `--replicate-to`, `--web-dir`.
+## Docker compose example
 
-## Docker
+Three-node cluster with Garage S3, lazy loading, and encryption:
 
-```sh
-docker build -t scalaxy .
-docker run --rm -p 8080:8080 -p 7200:7200 -v scalaxy-data:/var/lib/scalaxy scalaxy
-# console: http://localhost:8080
+```yaml
+services:
+  garage:
+    image: dxflrs/garage:v1.0.0
+    # ... Garage configuration ...
+
+  scalaxy-0:
+    image: scalaxy:integration
+    environment:
+      SCALAXY_NODE_ID: node-0
+      SCALAXY_STORE_BACKEND: s3
+      SCALAXY_S3_ENDPOINT: http://garage:3900
+      SCALAXY_S3_BUCKET: int-0
+      SCALAXY_S3_ACCESS_KEY: GK...
+      SCALAXY_S3_SECRET_KEY: ...
+      SCALAXY_S3_PREFIX: myapp
+      SCALAXY_S3_LAZY: "true"
+      SCALAXY_S3_ENCRYPTION_KEY: "your-secret-key-here"
+      SCALAXY_PEERS: node-0=scalaxy-0:7200,node-1=scalaxy-1:7200,node-2=scalaxy-2:7200
+      SCALAXY_REPLICATE_TO: node-1=scalaxy-1:7200
+
+  # ... scalaxy-1 and scalaxy-2 with their own buckets and keys ...
 ```
 
-The image is multi-stage: the builder compiles the systems and runs the full test suite at build time, so a broken build never produces an image. The runtime runs as a non-root user (uid 1000) with a `HEALTHCHECK` on `/healthz`.
+## Encryption
 
-## docker-compose (3-node cluster)
+Setting `SCALAXY_S3_ENCRYPTION_KEY` enables authenticated encryption of
+all data stored in S3. Each object body is encrypted with HMAC-SHA256
+CTR-mode encryption before upload and decrypted transparently on read.
 
-```sh
-docker compose up --build
-# console: http://localhost:8080
-```
+The key can be any non-empty string; it is converted to octets internally.
+All nodes must use the same key to read each other's data.
 
-Each service sets `SCALAXY_PEERS` to the full topology and `SCALAXY_REPLICATE_TO` to its downstream replica target. Data lives in named volumes.
+Without the key, data is stored unencrypted (backward compatible).
 
-## Cluster configuration
+## Local persistent cache
 
-```sh
-export SCALAXY_PEERS="node-0=scalaxy-0:7200:8080,node-1=scalaxy-1:7200:8080,node-2=scalaxy-2:7200:8080"
-export SCALAXY_REPLICATE_TO="node-1=scalaxy-1:7200"
-bin/scalaxy
-```
+Each node maintains a local disk cache of fetched S3 objects under
+`$SCALAXY_DATA_DIR/s3-cache/`. The cache stores plaintext (decrypted)
+data for fast reads; it is on the trusted node's local disk.
 
-- `SCALAXY_PEERS`: the full ring membership. Every node should agree on this list so ownership is consistent.
-- `SCALAXY_REPLICATE_TO`: where this node sends synchronous replicas. A common layout is a replication ring: node-0 → node-1 → node-2 → node-0.
-- The optional `:http-port` suffix lets the gateway aggregate status when peers listen on different HTTP ports.
-
-{{< callout type="warn" >}}
-All nodes must agree on `SCALAXY_PEERS`; inconsistent topologies produce inconsistent ownership.
-{{< /callout >}}
-
-## Health checks
-
-`GET /healthz` returns `{"status":"ok"}` with HTTP 200 when the node's HTTP server is accepting connections. It backs the container `HEALTHCHECK` and the Kubernetes probes.
+Cache eviction uses a budget set by `SCALAXY_S3_CACHE_MAX_BYTES`.
+When unset, the cache grows without bound (recommended for dedicated
+nodes with sufficient disk).
