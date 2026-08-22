@@ -8,30 +8,30 @@ weight: 25
 
 Scalaxy's graph layer turns every database into a **property graph** on
 top of the same replicated, durable key/value store.  Graph entities share
-the ring, the durability log, and the failover story with keys — nothing
-extra to deploy.
+the ring and durability log used by keys. Key and graph operations
+therefore share the same failover behavior; there is no extra graph service
+to deploy.
 
 ## Data model
 
-- **Node** — an id, a set of labels, and a property map.  A node can carry
+- **Node**: an id, a set of labels, and a property map.  A node can carry
   any number of labels (`:Person`, `:Movie`, ...).
-- **Relationship** — an id, a type, a start node, an end node, and a
+- **Relationship**: an id, a type, a start node, an end node, and a
   property map.  Relationships are always directed; queries can match them
   in either direction.
-- **Property values** — scalars, strings, booleans, lists, and maps; large
-  binary properties spill to blob records so the graph stays cheap to
-  scan.
+- **Property values**: scalars, strings, booleans, lists, and maps. Large
+  binary properties spill to blob records.
 
 ## Storage
 
-- **Over the KV store** — nodes, relationships, and the index structures
+- **Over the KV store**: nodes, relationships, and the index structures
   are ordinary records in the replicated store ({{< src "src/graph.lisp" >}},
   {{< src "src/db.lisp" >}}, {{< src "src/codec.lisp" >}}), so they are sharded by consistent
   hashing, appended to the durability log, and replayed on startup like
   any other mutation.
-- **Indexes** — label, type, and adjacency (outgoing/incoming) indexes
+- **Indexes**: label, type, and adjacency (outgoing/incoming) indexes
   keep `MATCH (a:Label)-[:TYPE]->(b)` local to the relevant entity sets.
-- **Id minting** — entity ids are minted by the database layer, with
+- **Id minting**: entity ids are minted by the database layer, with
   binary codec support for round-tripping entities through the wire
   protocol and the log.
 
@@ -56,5 +56,5 @@ curl -X POST http://localhost:8080/api/cypher \
 
 ## Next
 
-- [Cypher](/docs/cypher/) — the query language, conformance results, and reference.
-- [Benchmarks](/docs/benchmarks/) — the Movie Graph and NYC taxi datasets.
+- [Cypher](/docs/cypher/): the query language, conformance results, and reference.
+- [Benchmarks](/docs/benchmarks/): the Movie Graph and NYC taxi datasets.

@@ -8,4 +8,4 @@ weight: 110
 
 This section is for maintainers of the Scalaxy repository: cutting releases, keeping CI healthy, and running the project.
 
-- [Releasing](/docs/maintainers/releasing/) — tagging, image builds, and the release checklist.
+- [Releasing](/docs/maintainers/releasing/): tagging, image builds, and the release checklist.

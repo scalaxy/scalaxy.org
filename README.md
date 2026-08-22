@@ -1,4 +1,4 @@
-# scalaxy.org — Scalaxy website
+# scalaxy.org: Scalaxy website
 
 The [Scalaxy](https://github.com/scalaxy/scalaxy) project website: a **Hugo** static site with the general description, use cases, topologies, and the developer & maintainer documentation portal.
 
@@ -45,7 +45,7 @@ sidebar, breadcrumbs, and prev/next paging automatically from page `weight`.
 
 ## Deploy
 
-The site is hosted on **Cloudflare Pages** (a Pages project — **not** Workers).
+The site is hosted on **Cloudflare Pages** (a Pages project, not Workers).
 It follows the official
 [Deploy a Hugo site](https://developers.cloudflare.com/pages/framework-guides/deploy-a-hugo-site/)
 framework guide. In the **Set up builds and deployments** section:
@@ -64,7 +64,7 @@ Every push to `main` triggers a Cloudflare Pages build and deploy.
 > Cloudflare project was created as a **Workers** project (Workers
 > Builds). Delete it and create a **Pages** project (Workers & Pages →
 > Create application → Pages → Import an existing Git repository) with
-> the settings above — Pages deploys the `public` directory natively and
+> the settings above. Pages deploys the `public` directory natively and
 > does not run `wrangler deploy`.
 
 ### Hugo version
@@ -102,8 +102,8 @@ npm run deploy      # build + wrangler pages deploy public --project-name scalax
 
 Requires `wrangler login` (or `CLOUDFLARE_API_TOKEN` / `CLOUDFLARE_ACCOUNT_ID`
 env vars) for `deploy`. An optional GitHub Actions workflow
-(`.github/workflows/deploy.yml`) is included for push-based deploys — only
-use it if you are **not** using the Cloudflare Pages Git integration.
+(`.github/workflows/deploy.yml`) is included for push-based deploys. Use it only
+if you are **not** using the Cloudflare Pages Git integration.
 
 ### Other static hosts
 

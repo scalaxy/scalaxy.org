@@ -49,8 +49,8 @@ export SCALAXY_REPLICATE_TO="node-1=scalaxy-1:7200"
 bin/scalaxy
 ```
 
-- `SCALAXY_PEERS` — the full ring membership. Every node should agree on this list so ownership is consistent.
-- `SCALAXY_REPLICATE_TO` — where this node sends synchronous replicas. A common layout is a replication ring: node-0 → node-1 → node-2 → node-0.
+- `SCALAXY_PEERS`: the full ring membership. Every node should agree on this list so ownership is consistent.
+- `SCALAXY_REPLICATE_TO`: where this node sends synchronous replicas. A common layout is a replication ring: node-0 → node-1 → node-2 → node-0.
 - The optional `:http-port` suffix lets the gateway aggregate status when peers listen on different HTTP ports.
 
 {{< callout type="warn" >}}

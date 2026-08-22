@@ -7,11 +7,16 @@ date: 2026-08-06
 lastmod: 2026-08-17
 ---
 
-Scalaxy runs the same code in every topology; only the environment variables change. All topologies use the data-plane port `7200` (binary protocol) and the console port `8080` (web UI, REST API, `/healthz`). Graph entities and Cypher queries travel over the same ring and the same ports as keys — a cluster is a graph database, not a separate deployment.
+Use the same executable for a single node, a replicated cluster, or a Kubernetes
+StatefulSet. Select the topology with environment variables. Every setup uses
+port `7200` for the binary protocol and port `8080` for the web UI, REST API,
+and `/healthz`. Graph entities and Cypher queries use the same ring and ports
+as key/value operations.
 
 ## Single node
 
-The simplest setup: one node with a durable log and its own web console. Good for development, edge devices, and small workloads.
+A single-node deployment has a durable log and its own web console. Use it
+for local development, small services, and edge devices.
 
 <div class="diagram">
 <svg viewBox="0 0 640 200" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Single node topology">
@@ -81,7 +86,7 @@ export SCALAXY_REPLICATE_TO="node-1=scalaxy-1:7200"
 ```
 
 {{< callout type="success" title="Verified behavior" >}}
-With 3 nodes and one replica per key, stopping any node loses **zero** keys — reads fail over to replicas, writes continue on the survivors, and the cluster reports `degraded` until the node rejoins.
+With 3 nodes and one replica per key, stopping any one node leaves every key readable. Reads fail over to replicas, writes continue on reachable survivors, and the cluster reports `degraded` until the node rejoins.
 {{< /callout >}}
 
 ## Kubernetes

@@ -8,7 +8,7 @@ weight: 10
 
 ## Requirements
 
-- [SBCL](https://www.sbcl.org/) 2.x — the reference implementation.
+- [SBCL](https://www.sbcl.org/) 2.x: the reference implementation.
 - Git, Make, and a POSIX shell for the launcher scripts.
 - No external Lisp libraries are required: the JSON, HTTP, and TCP layers are implemented in-tree.
 
@@ -45,11 +45,12 @@ Scalaxy node <hostname>
 
 ## Use the web console
 
-Open <http://127.0.0.1:8080> — the dashboard shows cluster status, keys, the ring distribution, and a command console:
+Open <http://127.0.0.1:8080>. The dashboard shows cluster status, keys, the
+ring distribution, and a command console:
 
-![Scalaxy web console — cluster overview](/img/screenshots/scalaxy1.jpg)
+![Scalaxy web console: cluster overview](/img/screenshots/scalaxy1.jpg)
 
-![Scalaxy web console — data browser](/img/screenshots/scalaxy2.jpg)
+![Scalaxy web console: data browser](/img/screenshots/scalaxy2.jpg)
 
 Or use the REST API directly:
 
@@ -94,6 +95,6 @@ aggregation.  See [Graph database](/docs/graph-database/) and
 
 ## Next steps
 
-- [Architecture](/docs/architecture/) — how the pieces fit together.
-- [Deployment](/docs/deployment/) — Docker, compose, and configuration.
-- [Kubernetes](/docs/kubernetes/) — run a replicated cluster on Kubernetes.
+- [Architecture](/docs/architecture/): how the pieces fit together.
+- [Deployment](/docs/deployment/): Docker, compose, and configuration.
+- [Kubernetes](/docs/kubernetes/): run a replicated cluster on Kubernetes.

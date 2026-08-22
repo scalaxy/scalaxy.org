@@ -27,7 +27,7 @@ Scalaxy follows **semantic versioning** (`MAJOR.MINOR.PATCH`). The version lives
    curl localhost:8080/healthz
    ```
 
-4. **Verify a 3-node cluster** (docker-compose or Kubernetes) — write keys, stop one node, confirm zero data loss.
+4. **Verify a 3-node cluster** (docker-compose or Kubernetes): write keys, stop one node, and confirm that acknowledged keys remain readable from replicas.
 5. **Tag** the release:
 
    ```sh

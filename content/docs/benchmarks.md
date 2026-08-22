@@ -2,7 +2,7 @@
 date: 2026-08-17
 lastmod: 2026-08-17
 title: "Benchmarks"
-description: "Two shipped benchmark datasets — the Neo4j Movie Graph and the NYC taxi graph — with provenance and reference timings."
+description: "Two shipped benchmark datasets (the Neo4j Movie Graph and the NYC taxi graph), with provenance and reference timings."
 weight: 55
 ---
 
@@ -43,8 +43,8 @@ taxi-zone nodes and `[:TRIP]` relationships in two modes:
 | `aggregated` | 25,711 | one edge per zone pair, with `trips`/`distance`/`fare`/`passengers` sums |
 | `per-trip` | 2,933,097 | one edge per trip (Jan 2024 yellow taxi) |
 
-The per-trip graph loads in ~20 s (8 GB heap) — a genuine large-database
-test.  A reproducible `prepare.py` pipeline downloads the TLC zone lookup
+The per-trip graph loads in ~20 s with an 8 GB heap. This measures a
+2.93M-edge load. A reproducible `prepare.py` pipeline downloads the TLC zone lookup
 and trip parquet and regenerates the CSV inputs; the raw downloads and the
 large per-trip CSV are git-ignored.
 

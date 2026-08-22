@@ -7,30 +7,30 @@ weight: 35
 ---
 
 Scalaxy implements the **openCypher** query language for its graph layer,
-entirely in Common Lisp (SBCL) with zero external dependencies.  The
-compiler pipeline lives in {{< src "src/cypher/" >}}: lexer → parser → AST (with a
+implemented in Common Lisp (SBCL); the protocol, JSON, and HTTP layers are
+in-tree. The compiler pipeline lives in {{< src "src/cypher/" >}}: lexer → parser → AST (with a
 canonical printer) → semantic analysis → executor, plus a wire format and
 a metacircular reference oracle used for differential testing.
 
 ## Language coverage
 
-- **Clauses** — `MATCH`, `OPTIONAL MATCH`, `WHERE`, `WITH`, `RETURN`,
+- **Clauses**: `MATCH`, `OPTIONAL MATCH`, `WHERE`, `WITH`, `RETURN`,
   `UNWIND`, `ORDER BY`, `SKIP`, `LIMIT`, `DISTINCT`, `UNION`, `CREATE`,
   `MERGE` (with `ON CREATE` / `ON MATCH`), `SET` (including map `=`/`+=`
   with null-removal), `REMOVE`, `DELETE`, `DETACH DELETE`.
-- **Patterns** — labels, relationship types and direction, property
+- **Patterns**: labels, relationship types and direction, property
   constraints, bound-variable anchoring, named paths (`MATCH p = ...`),
   and variable-length relationships (`-[:T*1..3]->`) with
   relationship-list binding.
-- **Expressions** — literals, maps, lists, list comprehensions, pattern
+- **Expressions**: literals, maps, lists, list comprehensions, pattern
   comprehensions, list predicates (`all`/`any`/`none`/`single`),
   `EXISTS { }`, `CASE`, chained comparisons, list concatenation,
   append/prepend, and string/aggregation functions.
-- **Aggregation** — symbolic aggregation, so aggregates can nest inside
+- **Aggregation**: symbolic aggregation, so aggregates can nest inside
   arbitrary expressions (`count(a) * 10 + count(b) * 5`,
   `head(collect(...))`), with implicit grouping, `DISTINCT` aggregates,
   and per-group `ORDER BY`.
-- **Errors** — the openCypher error taxonomy as ~35 named CLOS
+- **Errors**: the openCypher error taxonomy as ~35 named CLOS
   conditions, surfaced through the REST API with `error` and `kind`
   fields.
 
@@ -60,12 +60,12 @@ repository alongside the implementation.
 
 ## Access points
 
-- **REST** — `POST /api/cypher` (see [REST API](/docs/rest-api/)).
-- **Lisp client** — `(scalaxy:cypher client query &key db params)` (see
+- **REST**: `POST /api/cypher` (see [REST API](/docs/rest-api/)).
+- **Lisp client**: `(scalaxy:cypher client query &key db params)` (see
   [Client API](/docs/client-api/)).
-- **Wire protocol** — the `CYPHER` opcode (12) over the binary frames (see
+- **Wire protocol**: the `CYPHER` opcode (12) over the binary frames (see
   [Protocol](/docs/protocol/)).
-- **Web console** — the `cypher <query>` command in the console's command
+- **Web console**: the `cypher <query>` command in the console's command
   bar.
 
 ## Reference
@@ -76,5 +76,5 @@ The complete language reference lives in the repository:
 
 ## Next
 
-- [Benchmarks](/docs/benchmarks/) — Movie Graph and NYC taxi datasets that
+- [Benchmarks](/docs/benchmarks/): Movie Graph and NYC taxi datasets that
   exercise the engine at two very different scales.

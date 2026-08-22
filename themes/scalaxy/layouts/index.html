@@ -8,7 +8,7 @@
         <span class="badge green"><span class="dot"></span>Open Source · MIT</span>
       </div>
       <h1>A graph database in Common Lisp.</h1>
-      <p class="hero-sub">Query property graphs with openCypher, browse them in a built-in web console, and replicate writes across nodes automatically — all from one binary. Nothing else to install.</p>
+      <p class="hero-sub">Scalaxy is a Common Lisp graph database. Query property graphs with openCypher, inspect data in the HTTP console, and replicate writes across nodes from the same binary.</p>
       <div class="hero-ctas">
         <a class="btn btn-primary btn-lg" href="{{ "docs/" | relURL }}">Read the docs</a>
         <a class="btn btn-lg" href="{{ site.Params.repo }}" target="_blank" rel="noopener">View on GitHub</a>
@@ -17,7 +17,7 @@
         <span><b>Version</b> {{ site.Params.version }}</span>
         <span><b>Language</b> Common Lisp (SBCL)</span>
         <span><b>License</b> MIT</span>
-        <span><b>Zero dependencies</b> core + console</span>
+        <span><b>Runtime</b> SBCL, no Lisp libraries</span>
       </div>
     </div>
     <div class="terminal">
@@ -25,7 +25,7 @@
         <span class="dot" style="background:#ff5f57"></span>
         <span class="dot" style="background:#febc2e"></span>
         <span class="dot" style="background:#28c840"></span>
-        <span class="title">scalaxy — quick start</span>
+        <span class="title">scalaxy: quick start</span>
       </div>
       <pre><code><span class="cmt"># run the test suite (9,018 checks)</span>
 <span class="cmd">$</span> make test
@@ -50,8 +50,8 @@
   <div class="container">
     <div class="section-head">
       <div class="kicker">Overview</div>
-      <h2>What is Scalaxy</h2>
-      <p>Scalaxy is a graph database written in Common Lisp. It stores property graphs — nodes with labels, typed relationships, and properties — and answers openCypher queries against them. Everything runs in one binary with a built-in web console, and the same store handles plain keys when you need them.</p>
+      <h2>Graph storage and key/value storage in one process</h2>
+      <p>Scalaxy stores nodes, relationships, labels, and properties in a durable key/value store. The graph and key/value APIs share the same ring, replication path, and HTTP console.</p>
     </div>
     <div class="grid-3">
       {{ range site.Data.features }}
@@ -70,18 +70,18 @@
     <div class="section-head">
       <div class="kicker">Screenshots</div>
       <h2>The web console</h2>
-      <p>Every node serves its own console over HTTP. No separate frontend to build or deploy.</p>
+      <p>Each node serves the dashboard and REST API on port 8080. No separate frontend process is required.</p>
     </div>
     <div class="grid-2">
       <figure class="screenshot">
         <a href="/img/screenshots/scalaxy1.jpg" target="_blank" rel="noopener">
-          <img src="/img/screenshots/scalaxy1.jpg" alt="Scalaxy web console — cluster overview" loading="lazy">
+          <img src="/img/screenshots/scalaxy1.jpg" alt="Scalaxy web console: cluster overview" loading="lazy">
         </a>
         <figcaption>Cluster overview: nodes, keys, replication, and ring distribution.</figcaption>
       </figure>
       <figure class="screenshot">
         <a href="/img/screenshots/scalaxy2.jpg" target="_blank" rel="noopener">
-          <img src="/img/screenshots/scalaxy2.jpg" alt="Scalaxy web console — data browser" loading="lazy">
+          <img src="/img/screenshots/scalaxy2.jpg" alt="Scalaxy web console: data browser" loading="lazy">
         </a>
         <figcaption>Data browser: search, pagination, and key inspection.</figcaption>
       </figure>
@@ -93,17 +93,17 @@
   <div class="container">
     <div class="section-head">
       <div class="kicker">Get started</div>
-      <h2>Up and running in minutes</h2>
+      <h2>From source to a running node</h2>
     </div>
     <div class="grid-3">
       <div class="card">
         <h3><span class="dim">01</span> · Install</h3>
-        <p>You need SBCL 2.x. Clone the repository, run <code>make test</code>, and you're done — there's nothing else to install.</p>
+        <p>Install SBCL 2.x, clone the repository, and run <code>make test</code>. The runtime has no external Lisp dependencies.</p>
         <a class="card-link" href="{{ "docs/getting-started/" | relURL }}">Getting started →</a>
       </div>
       <div class="card">
         <h3><span class="dim">02</span> · Deploy</h3>
-        <p>Run a single node, a docker-compose cluster, or a Kubernetes StatefulSet. Configuration is just environment variables.</p>
+        <p>Run a single node, a Docker Compose cluster, or a Kubernetes StatefulSet. Configuration uses environment variables.</p>
         <a class="card-link" href="{{ "docs/deployment/" | relURL }}">Deployment →</a>
       </div>
       <div class="card">
@@ -119,23 +119,23 @@
   <div class="container">
     <div class="section-head">
       <div class="kicker">Topologies</div>
-      <h2>Same code, three ways to run it</h2>
-      <p>The binary is identical in every setup; only the environment variables change. Run one node on a laptop, a replicated cluster on a few machines, or a StatefulSet in Kubernetes.</p>
+      <h2>Choose a deployment topology</h2>
+      <p>Use the same binary for a single node, Docker Compose, or a Kubernetes StatefulSet. Set <code>SCALAXY_PEERS</code> and <code>SCALAXY_REPLICATE_TO</code> to describe the cluster.</p>
     </div>
     <div class="grid-3">
       <div class="card">
         <h3>Single node</h3>
-        <p>One node, a durable log, and a web console. Fine for development, small services, and edge devices.</p>
+        <p>One node, a durable log, and a web console for local development, small services, and edge devices.</p>
         <a class="card-link" href="{{ "topologies/" | relURL }}">Topologies →</a>
       </div>
       <div class="card">
         <h3>Cluster</h3>
-        <p>Keys shard across N nodes and writes replicate synchronously, so reads and writes keep working when a node goes down.</p>
+        <p>Keys shard across N nodes. With a replica and a reachable survivor, reads fail over and acknowledged writes remain available when a node goes down.</p>
         <a class="card-link" href="{{ "topologies/" | relURL }}">Topologies →</a>
       </div>
       <div class="card">
         <h3>Kubernetes</h3>
-        <p>A StatefulSet with PVCs, probes, and peer discovery over headless DNS. Add pods to grow the ring.</p>
+        <p>A StatefulSet with PVCs, probes, and peer discovery over headless DNS. Change the peer list when you change the replica count.</p>
         <a class="card-link" href="{{ "docs/kubernetes/" | relURL }}">Kubernetes →</a>
       </div>
     </div>
@@ -147,15 +147,15 @@
     <div class="section-head">
       <div class="kicker">Documentation</div>
       <h2>Docs for developers and maintainers</h2>
-      <p>Everything is documented: install, architecture, protocol, deployment, and how to run a cluster in production.</p>
+      <p>Guides cover local builds, the wire and REST APIs, Docker and Kubernetes deployment, and failure handling.</p>
     </div>
     <div class="grid-3">
       {{ range $cards := slice
           (dict "icon" "<path d='M12 3l8 4.5v9L12 21l-8-4.5v-9L12 3z'/><path d='M4 7.5l8 4.5 8-4.5M12 12v9'/>" "title" "Getting started" "desc" "Install, build, and run your first Scalaxy node." "link" "/docs/getting-started/")
           (dict "icon" "<circle cx='12' cy='12' r='9'/><circle cx='12' cy='12' r='2'/>" "title" "Architecture" "desc" "Ring sharding, replication, storage, and the console." "link" "/docs/architecture/")
           (dict "icon" "<path d='M5 12h14M13 6l6 6-6 6'/>" "title" "REST API" "desc" "The HTTP API behind the web console." "link" "/docs/rest-api/")
-          (dict "icon" "<circle cx='12' cy='12' r='9'/><circle cx='5.5' cy='5.5' r='1.5'/><circle cx='18.5' cy='5.5' r='1.5'/><circle cx='12' cy='17' r='1.5'/><path d='M6.5 6.5l5.5 9M17.5 6.5l-5.5 9'/>" "title" "Graph database" "desc" "The property-graph layer over the replicated store." "link" "/docs/graph-database/")
-          (dict "icon" "<path d='M3 17l6-6 4 4 8-8M14 7h7v7'/>" "title" "Cypher" "desc" "The openCypher language: queries, certification, reference." "link" "/docs/cypher/")
+          (dict "icon" "<circle cx='12' cy='12' r='9'/><circle cx='5.5' cy='5.5' r='1.5'/><circle cx='18.5' cy='5.5' r='1.5'/><circle cx='12' cy='17' r='1.5'/><path d='M6.5 6.5l5.5 9M17.5 6.5l-5.5 9'/>" "title" "Graph database" "desc" "Nodes, relationships, labels, and indexes." "link" "/docs/graph-database/")
+          (dict "icon" "<path d='M3 17l6-6 4 4 8-8M14 7h7v7'/>" "title" "Cypher" "desc" "The openCypher language, conformance result, and reference." "link" "/docs/cypher/")
           (dict "icon" "<path d='M12 3l8 4.5v9L12 21l-8-4.5v-9L12 3z'/><path d='M4 7.5l8 4.5 8-4.5M12 12v9'/>" "title" "Benchmarks" "desc" "Movie Graph and NYC taxi datasets with reference timings." "link" "/docs/benchmarks/")
           (dict "icon" "<rect x='3' y='5' width='18' height='12' rx='2'/><path d='M8 20h8M12 17v3'/>" "title" "Deployment" "desc" "Docker, compose, and configuration reference." "link" "/docs/deployment/")
           (dict "icon" "<path d='M12 3l8 4.5v9L12 21l-8-4.5v-9L12 3z'/>" "title" "Kubernetes" "desc" "Run a replicated cluster as a StatefulSet." "link" "/docs/kubernetes/")

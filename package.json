@@ -2,7 +2,7 @@
   "name": "scalaxy-org",
   "version": "1.8.0",
   "private": true,
-  "description": "scalaxy.org \u2014 Scalaxy project website (Hugo + Cloudflare Pages)",
+  "description": "scalaxy.org: Scalaxy project website (Hugo + Cloudflare Pages)",
   "scripts": {
     "build": "hugo --minify",
     "dev": "hugo server -D",

@@ -24,7 +24,8 @@ weight: 60
 (scalaxy:delete *db* "user:1")                     ; => T
 ```
 
-Values are octet vectors, so any binary payload stores as-is. The client speaks the wire protocol directly over TCP — no HTTP required.
+Values are octet vectors, so any binary payload stores as-is. The client
+speaks the wire protocol directly over TCP; it does not require HTTP.
 
 Graph queries run through the same client:
 
@@ -39,7 +40,7 @@ through the gateway like any other operation.
 
 ## curl
 
-The REST API ([reference](/docs/rest-api/)) is the easiest way to integrate from scripts:
+Use the REST API ([reference](/docs/rest-api/)) from scripts:
 
 ```sh
 curl -X PUT http://localhost:8080/api/keys/flag -d '{"value":"on"}'
@@ -50,12 +51,15 @@ curl -X DELETE http://localhost:8080/api/keys/flag
 
 ## Other languages
 
-The [wire protocol](/docs/protocol/) is a length-prefixed binary format over TCP. Any language with TCP sockets can implement a client in a few hundred lines — see the opcode table for the exact layout.
+The [wire protocol](/docs/protocol/) is a length-prefixed binary format over
+TCP. Any language with TCP sockets can implement a client in a few hundred
+lines; the opcode table gives the exact layout.
 
 ## Cluster-aware routing
 
 When a node runs with `SCALAXY_PEERS` set, REST and console operations route to ring owners automatically. For raw TCP clients, connect to any node and use the ring hashing rules to target the owner, or use the REST API as a gateway.
 
 {{< callout type="info" >}}
-The in-process `make-cluster` API embeds routing and replication in your own Lisp process — useful for tests and single-process services.
+The in-process `make-cluster` API embeds routing and replication in your own
+Lisp process. This is useful for tests and single-process services.
 {{< /callout >}}

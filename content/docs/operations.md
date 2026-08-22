@@ -8,9 +8,9 @@ weight: 90
 
 ## Monitoring
 
-- **Health** — poll `/healthz`; non-200 means the node is not serving.
-- **Status** — `/api/status` returns cluster state: `healthy`, `degraded`, or node-level `unreachable`.
-- **Metrics** — per-node key counts and uptime via `/api/node-status` (used by the dashboard's cluster view).
+- **Health**: poll `/healthz`; non-200 means the node is not serving.
+- **Status**: `/api/status` returns cluster state: `healthy`, `degraded`, or node-level `unreachable`.
+- **Metrics**: per-node key counts and uptime via `/api/node-status` (used by the dashboard's cluster view).
 
 ## Failure behavior
 
@@ -24,7 +24,7 @@ weight: 90
 ## Durability
 
 - Every acknowledged write is appended to `scalaxy.log` in `SCALAXY_DATA_DIR` before the client receives the ack.
-- The log is the same record format as the network protocol — replay is exact.
+- The log is the same record format as the network protocol: replay is exact.
 - Graph entities (nodes, relationships, properties) are ordinary records in
   the same store, so `CREATE`/`MERGE`/`SET`/`DELETE` mutations ride the
   same durability and replication path as keys.

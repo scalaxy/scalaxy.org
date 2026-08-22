@@ -8,14 +8,15 @@ weight: 100
 
 ## Welcome
 
-Scalaxy is an independent, open-source project. Contributions of code, documentation, tests, and ideas are all welcome.
+Scalaxy is an independent, open-source project. Submit code, documentation,
+tests, or bug reports through GitHub issues and pull requests.
 
 ## Development workflow
 
 1. **Fork & clone** the repository.
 2. **Run the tests** before changing anything: `make test`.
-3. **Make a focused change** — add tests alongside any behavior change.
-4. **Keep the suite green** — `make test` must pass locally.
+3. **Make a focused change**: add tests alongside any behavior change.
+4. **Keep the suite green**: `make test` must pass locally.
 5. **Open a pull request** describing the change and the tests.
 
 ## What to work on
@@ -33,10 +34,11 @@ Scalaxy is an independent, open-source project. Contributions of code, documenta
 ## Guidelines
 
 - Pure ANSI Common Lisp where possible; keep SBCL-specific code behind `#+sbcl` and out of the core modules.
-- The JSON/HTTP/TCP layers are intentionally dependency-free — please keep them that way.
+- The JSON/HTTP/TCP layers are intentionally dependency-free: please keep them that way.
 - Every public function should have a docstring.
 - Update the relevant docs page on this site when you change behavior.
 
 ## Code of conduct
 
-Be respectful and constructive. This is a small project — every contributor matters.
+Be respectful and constructive. For questions about a change, open an issue
+or include the relevant context in the pull request.

@@ -36,18 +36,18 @@ database name, the query text, and JSON parameters; the reply is a
 | `REPLICATE` | 5 | seq (u64) + sub-op (u8) + put/delete payload |
 | `ACK` | 6 | seq (u64, 0 if unused) + status (u8) |
 | `ERROR` | 7 | message string |
-| `PING` | 8 | — |
-| `PONG` | 9 | — |
+| `PING` | 8 | none |
+| `PONG` | 9 | none |
 | `SNAPSHOT` | 10 | count (u32) + (key, value) pairs |
 | `RESPONSE` | 11 | status (u8) + value octets + count (u32) + pairs |
 | `CYPHER` | 12 | db (string) + query (string) + params (JSON octets) |
 
 ## Primitives
 
-- **u8 / u32 / u64** — unsigned big-endian integers.
-- **length-prefixed string** — u32 length + UTF-8/ASCII bytes.
-- **octets** — u32 length + raw bytes.
-- **status** — `0` = OK, `1` = not found.
+- **u8 / u32 / u64**: unsigned big-endian integers.
+- **length-prefixed string**: u32 length + UTF-8/ASCII bytes.
+- **octets**: u32 length + raw bytes.
+- **status**: `0` = OK, `1` = not found.
 
 ## Example: GET round trip
 
@@ -62,5 +62,5 @@ node   -> client: 00 00 00 0d 0b 00 00 00 00 00 00 00 03 76 61 6c
 The encoder/decoder live in {{< src "src/protocol.lisp" >}} (`encode-message`, `decode-message`, `frame-message`). The TCP transport is in {{< src "src/tcp.lisp" >}}; hostnames are resolved with `resolve-host`, so peers can be addressed by DNS name in containers and Kubernetes.
 
 {{< callout type="note" >}}
-The protocol is small on purpose: it keeps the database easy to audit, reimplement, and embed. A full reference of every opcode's exact byte layout is in the docstrings of {{< src "src/protocol.lisp" >}}.
+The protocol uses a 4-byte length prefix, a 1-byte opcode, and an opcode-specific payload. The exact byte layout for each opcode is in the docstrings of {{< src "src/protocol.lisp" >}}.
 {{< /callout >}}

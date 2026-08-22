@@ -33,7 +33,7 @@ weight: 30
 Keys are hashed with **FNV-1a 64-bit plus a SplitMix64 finalizer** for a uniform spread, then placed on a ring of **virtual nodes** (128 per physical node by default). A key is owned by the first vnode clockwise from its hash.
 
 - Adding or removing a node moves only ~1/N of the keys.
-- Because vnode positions are deterministic, every member computes the same ownership — no coordination protocol is required for routing.
+- Because vnode positions are deterministic, every member computes the same ownership: no coordination protocol is required for routing.
 
 ## Replication
 
@@ -55,15 +55,15 @@ Each node keeps an in-memory hash table plus an **append-only log** using the sa
 On top of the replicated key/value store sits a **property-graph layer**
 ({{< src "src/graph.lisp" >}}, {{< src "src/db.lisp" >}}, {{< src "src/codec.lisp" >}}):
 
-- **Nodes & relationships** — every node has an id, a label set, and a
+- **Nodes & relationships**: every node has an id, a label set, and a
   property map; every relationship has an id, a type, start/end node ids,
   and a property map.  Large binary properties spill to blob records.
-- **Indexes** — label, type, and adjacency indexes (outgoing/incoming
+- **Indexes**: label, type, and adjacency indexes (outgoing/incoming
   relationships per node) keep pattern matching local.
-- **Multi-database** — a database is a namespaced partition of the same
+- **Multi-database**: a database is a namespaced partition of the same
   ring; graph entities, keys, and the durability log all live in the one
   replicated store.
-- **openCypher engine** ({{< src "src/cypher/" >}}) — a full compiler pipeline in pure
+- **openCypher engine** ({{< src "src/cypher/" >}}): a full compiler pipeline in pure
   Common Lisp: lexer → parser → AST (with canonical printer) → semantic
   analysis → executor, plus a wire format and a metacircular reference
   oracle used for differential testing.  The executor is symbolically
