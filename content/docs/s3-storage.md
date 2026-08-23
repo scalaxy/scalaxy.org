@@ -418,15 +418,37 @@ Scalaxy's storage semantics are formally specified in TLA+
 (`specs/tla/ScalaxySpec.tla`). This specification serves as the central
 truth for correctness guarantees:
 
-| Invariant | Guarantee |
-|---|---|
-| NoDataLoss | Every written key that hasn't been deleted is readable from some up node |
-| DeleteVisible | Tombstoned keys never appear as live data |
-| OwnershipConsistency | Each key has at least one node holding it |
-| EncryptionConsistency | Encryption state is consistent across all nodes |
+The specification is machine-verified: TLC exhaustively explores every
+reachable state and checks all invariants. Current certification:
 
-The specification models a 2-node cluster with 2 keys — small enough for
-exhaustive model checking via TLC while capturing the essential correctness
-properties of the distributed storage layer.
+| Model | States explored | Result |
+|---|---|---|
+| 2 nodes × 2 keys | 36 | PASS |
+| 3 nodes × 3 keys | 3,424 | PASS |
+
+| Invariant | Scope | Guarantee |
+|---|---|---|
+| TypeOK | correctness | All state well-formed |
+| DataIntegrity | storage | Every live key has at least one durable copy, regardless of crashes |
+| DeleteVisible | correctness | Deleted keys can never resurrect |
+| AvailabilityUnderSingleFailure | reliability | Any single-node crash costs zero read availability |
+| RecoveryRestoresService | reliability | Crashed nodes recover with durable copies intact |
+| ReplicationFactorTwo | storage | Live keys always stored on two nodes (RF=2) |
+| EncryptionAtRest | security | No key ever stored on an unencrypted node |
+
+Central-truth rules binding the implementation:
+
+1. **Commit rule** — a write commits only after the key is durably placed on
+   two distinct up-and-encrypted nodes.
+2. **Delete rule** — delete sets a tombstone immediately; the key becomes
+   invisible atomically and can never be written again.
+3. **Security rule** — encryption at rest may be disabled on a node only after
+   every durable copy has been drained from it.
+4. **Recovery rule** — restart restores durable copies intact; recovery never
+   requires network access to other nodes.
+
+TLC caught three bugs in earlier drafts of the specification itself (missing
+data placement on write, deleted-key resurrection, an overstated availability
+claim) before they could become implementation bugs.
 
 ---
