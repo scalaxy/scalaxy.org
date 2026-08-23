@@ -418,28 +418,33 @@ Scalaxy's storage semantics are formally specified in TLA+
 (`specs/tla/ScalaxySpec.tla`). This specification serves as the central
 truth for correctness guarantees:
 
-The specification is machine-verified: TLC exhaustively explores every
-reachable state and checks all invariants. Current certification:
+The specification models the system the way it actually works: a write
+becomes visible after its first durable encrypted copy, and a durable
+outbox plus background shipper bring each key to RF copies asynchronously.
+It is machine-verified with TLC — safety invariants in every reachable
+state, plus temporal (liveness) properties under fair scheduling:
 
-| Model | States explored | Result |
+| Model | Distinct states | Liveness checked |
 |---|---|---|
-| 2 nodes × 2 keys | 36 | PASS |
-| 3 nodes × 3 keys | 3,424 | PASS |
+| 2 nodes × 1 key × RF=2 | 56 | yes |
+| 2 nodes × 2 keys × RF=2 | 272 | yes |
+| 3 nodes × 2 keys × RF=2 | 2,752 | yes |
+| 3 nodes × 3 keys × RF=2 | 26,464 | yes |
+| 3 nodes × 3 keys × RF=3 | 92,240 | yes |
 
-| Invariant | Scope | Guarantee |
-|---|---|---|
-| TypeOK | correctness | All state well-formed |
-| DataIntegrity | storage | Every live key has at least one durable copy, regardless of crashes |
-| DeleteVisible | correctness | Deleted keys can never resurrect |
-| AvailabilityUnderSingleFailure | reliability | Any single-node crash costs zero read availability |
-| RecoveryRestoresService | reliability | Crashed nodes recover with durable copies intact |
-| ReplicationFactorTwo | storage | Live keys always stored on two nodes (RF=2) |
-| EncryptionAtRest | security | No key ever stored on an unencrypted node |
+Liveness properties, verified under fair scheduling:
+
+- **ReplicationConverges** — on a stable cluster every live key reaches RF copies.
+- **ServiceRestored** — every live key eventually becomes readable again after crashes.
+
+Stated honestly: before a key's replicas converge, losing its sole holder costs
+*temporary* unavailability until recovery. The data survives; TLC verified both
+the window's existence and recovery semantics.
 
 Central-truth rules binding the implementation:
 
-1. **Commit rule** — a write commits only after the key is durably placed on
-   two distinct up-and-encrypted nodes.
+1. **Write rule** — a write becomes visible once its first durable encrypted
+   copy exists; reaching RF copies is asynchronous via the durable outbox.
 2. **Delete rule** — delete sets a tombstone immediately; the key becomes
    invisible atomically and can never be written again.
 3. **Security rule** — encryption at rest may be disabled on a node only after
