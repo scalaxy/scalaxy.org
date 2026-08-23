@@ -424,22 +424,27 @@ outbox plus background shipper bring each key to RF copies asynchronously.
 It is machine-verified with TLC — safety invariants in every reachable
 state, plus temporal (liveness) properties under fair scheduling:
 
+The model includes permanent media loss (`LoseDisk`) and anti-entropy
+self-healing (`ReReplicate`): losing a non-final replica heals itself;
+losing the last copy of a live key is permanent and explicitly flagged.
+
 | Model | Distinct states | Liveness checked |
 |---|---|---|
-| 2 nodes × 1 key × RF=2 | 56 | yes |
-| 2 nodes × 2 keys × RF=2 | 272 | yes |
-| 3 nodes × 2 keys × RF=2 | 2,752 | yes |
-| 3 nodes × 3 keys × RF=2 | 26,464 | yes |
-| 3 nodes × 3 keys × RF=3 | 92,240 | yes |
+| 2 nodes × 1 key × RF=2 | 152 | yes |
+| 2 nodes × 2 keys × RF=2 | 1,840 | yes |
+| 3 nodes × 2 keys × RF=2 | 19,808 | yes |
+| 3 nodes × 2 keys × RF=3 | 23,552 | yes |
+| 3 nodes × 3 keys × RF=2 | 525,632 | yes |
 
 Liveness properties, verified under fair scheduling:
 
 - **ReplicationConverges** — on a stable cluster every live key reaches RF copies.
 - **ServiceRestored** — every live key eventually becomes readable again after crashes.
 
-Stated honestly: before a key's replicas converge, losing its sole holder costs
-*temporary* unavailability until recovery. The data survives; TLC verified both
-the window's existence and recovery semantics.
+Stated honestly: before replicas converge, losing the sole holder costs
+*temporary* unavailability until recovery; losing the *last copy permanently*
+(destroyed disk) is flagged as unrecoverable. TLC verified both the window's
+existence and the self-healing semantics.
 
 Central-truth rules binding the implementation:
 
