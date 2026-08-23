@@ -409,3 +409,24 @@ mean more S3 objects (slower listing) but faster per-batch flushes.
 Larger batches mean fewer objects but more data loss risk if a batch
 write fails. The default of 20 000 balances both concerns for most
 workloads.
+
+---
+
+## Formal specification
+
+Scalaxy's storage semantics are formally specified in TLA+
+(`specs/tla/ScalaxySpec.tla`). This specification serves as the central
+truth for correctness guarantees:
+
+| Invariant | Guarantee |
+|---|---|
+| NoDataLoss | Every written key that hasn't been deleted is readable from some up node |
+| DeleteVisible | Tombstoned keys never appear as live data |
+| OwnershipConsistency | Each key has at least one node holding it |
+| EncryptionConsistency | Encryption state is consistent across all nodes |
+
+The specification models a 2-node cluster with 2 keys — small enough for
+exhaustive model checking via TLC while capturing the essential correctness
+properties of the distributed storage layer.
+
+---
