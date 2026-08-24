@@ -446,6 +446,37 @@ Stated honestly: before replicas converge, losing the sole holder costs
 (destroyed disk) is flagged as unrecoverable. TLC verified both the window's
 existence and the self-healing semantics.
 
+### Topology and telecom-grade (five nines) availability
+
+Proper topology is part of the specification itself: every replication path --
+initial shipping and anti-entropy repair alike -- is required to place a
+replica in a *different availability zone* than its source. Replicas never
+share a zone, on any path, in any reachable state.
+
+The model includes whole-zone outage and recovery actions. The machine-proven
+result:
+
+> **A full outage of any single availability zone, with the surviving zone
+> healthy, never interrupts service.** Every live key already has a copy in
+> the surviving zone. Verified over all reachable states (up to 211,200
+> distinct states on a 4-node / 2-zone topology).
+
+This is the structural half of a five-nines (99.999%) certification: no
+single-zone failure is service-affecting. The arithmetic half is standard
+fault-tree math -- downtime requires two independent zone failures overlapping
+within the repair window:
+
+| Zone annual downtime (each) | Expected overlap | Result |
+|---|---|---|
+| 24 h/yr (conservative) | 3.9 min/yr | within five-nines budget |
+| 8.8 h/yr (99.99% cloud zones) | ~32 s/yr | ~99.9999% |
+
+Assumptions are stated in the specification repository: independent zone
+failures (no shared power/network/control plane), bounded repair time, and
+client failover. This mirrors how telecom carriers certify carrier-grade
+availability: prove no single fault is service-affecting, then bound the
+probability of simultaneous faults.
+
 Central-truth rules binding the implementation:
 
 1. **Write rule** — a write becomes visible once its first durable encrypted
