@@ -433,8 +433,9 @@ losing the last copy of a live key is permanent and explicitly flagged.
 | 2 nodes × 1 key × RF=2 | 152 | yes |
 | 2 nodes × 2 keys × RF=2 | 1,840 | yes |
 | 3 nodes × 2 keys × RF=2 | 19,808 | yes |
-| 3 nodes × 2 keys × RF=3 | 23,552 | yes |
-| 3 nodes × 3 keys × RF=2 | 525,632 | yes |
+| 4 nodes × 2 keys × RF=2 (balanced zones) | 211,200 | yes |
+| 3 nodes × 2 keys, partitions ON | 44,864 | yes |
+| 4 nodes × 2 keys, balanced zones, partitions ON | 422,400 | yes |
 
 Liveness properties, verified under fair scheduling:
 
@@ -460,6 +461,13 @@ result:
 > healthy, never interrupts service.** Every live key already has a copy in
 > the surviving zone. Verified over all reachable states (up to 211,200
 > distinct states on a 4-node / 2-zone topology).
+
+The model also includes **inter-zone network partitions**: both zones stay up
+but cannot replicate across the link. Verified behavior: a split cluster keeps
+serving its local copies indefinitely, loses nothing, and converges as soon as
+the link heals. Write capability survives zone failure too -- surviving nodes
+accept (or can instantly accept) writes, so the workload carries on, not just
+reads.
 
 This is the structural half of a five-nines (99.999%) certification: no
 single-zone failure is service-affecting. The arithmetic half is standard
